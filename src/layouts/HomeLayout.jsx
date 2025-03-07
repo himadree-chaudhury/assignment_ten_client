@@ -2,9 +2,11 @@ import React from 'react';
 
 const HomeLayout = () => {
     return (
-        <div>
-            
-        </div>
+        <section>
+            <div>
+                
+            </div>
+       </section>
     );
 };
 
