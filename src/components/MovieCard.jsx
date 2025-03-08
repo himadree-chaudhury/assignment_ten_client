@@ -37,7 +37,7 @@ const MovieCard = ({ movie }) => {
           <span>{Duration} min</span>
         </div>
         <Link
-          to={`/movie/${_id}`}
+          to={`/all-movies/${_id}`}
           className="block w-full bg-red-600 hover:bg-red-700 text-white text-center py-2 rounded transition duration-300"
         >
           See Details

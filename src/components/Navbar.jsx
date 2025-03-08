@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { FaSun, FaMoon, FaBars, FaTimes } from "react-icons/fa";
 import logo from "../assets/logo.png";
@@ -10,9 +10,7 @@ const Navbar = () => {
   const { theme, toggleTheme } = useContext(ThemeContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   // Close mobile menu on route change
-  useEffect(() => {
-    setIsMenuOpen(false);
-  }, [location]);
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };

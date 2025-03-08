@@ -1,13 +1,13 @@
-import React from 'react';
-import { createBrowserRouter } from 'react-router-dom';
-import RootLayout from '../layouts/RootLayout';
-import ErrorPage from '../pages/ErrorPage';
-import HomeLayout from '../layouts/HomeLayout';
-import AllMovies from '../pages/AllMovies';
-import AddMovies from '../pages/AddMovies';
-import Favorites from '../pages/Favorites';
-import Blogs from '../pages/Blogs';
-
+import React from "react";
+import { createBrowserRouter } from "react-router-dom";
+import RootLayout from "../layouts/RootLayout";
+import ErrorPage from "../pages/ErrorPage";
+import HomeLayout from "../layouts/HomeLayout";
+import AllMovies from "../pages/AllMovies";
+import AddMovies from "../pages/AddMovies";
+import Favorites from "../pages/Favorites";
+import Blogs from "../pages/Blogs";
+import MovieDetails from "../pages/MovieDetails";
 
 const route = createBrowserRouter([
   {
@@ -24,6 +24,11 @@ const route = createBrowserRouter([
         element: <AllMovies></AllMovies>,
       },
       {
+        path: "/all-movies/:id",
+        element: <MovieDetails></MovieDetails>,
+        loader: ({ params }) => fetch(`http://localhost:5000/movies/${params.id}`),
+      },
+      {
         path: "/add-movie",
         element: <AddMovies></AddMovies>,
       },
@@ -33,7 +38,7 @@ const route = createBrowserRouter([
       },
       {
         path: "/blog",
-        element:<Blogs></Blogs>
+        element: <Blogs></Blogs>,
       },
       // {
       //   path: "/auth",

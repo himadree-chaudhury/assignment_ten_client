@@ -52,7 +52,7 @@ const HomeLayout = () => {
               ].map(({ genre, image }) => (
                 <Link
                   key={genre}
-                  to={`/movies?genre=${genre}`}
+                  to={`/all-movies?genre=${genre}`}
                   className="bg-white dark:bg-gray-700 rounded-lg p-6 text-center shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
                 >
                   <img
