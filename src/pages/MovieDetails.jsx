@@ -155,7 +155,7 @@ const MovieDetails = () => {
                 {movie.Movie_Title}
               </h1>
               <div className="flex items-center bg-yellow-500 text-black font-bold px-3 py-1 rounded-full">
-                <FaStar className="mr-1" /> {movie.Rating.toFixed(1)}
+                <FaStar className="mr-1" /> {movie.Rating}
               </div>
             </div>
             <div className="flex flex-wrap gap-2 mt-4">

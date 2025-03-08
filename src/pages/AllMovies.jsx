@@ -27,7 +27,7 @@ const AllMovies = () => {
   ];
 
   useEffect(() => {
-    const genreParam = searchParams.get("Genre");
+    const genreParam = searchParams.get("genre");
     if (genreParam) {
       setSelectedGenre(genreParam);
     }

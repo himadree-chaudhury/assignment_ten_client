@@ -14,7 +14,7 @@ const MovieCard = ({ movie }) => {
   } = movie;
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-xl">
+    <div className="bg-gray-800 rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-xl">
       <div className="relative h-64 flex justify-center items-center bg-black">
         <img
           src={Movie_Poster}
