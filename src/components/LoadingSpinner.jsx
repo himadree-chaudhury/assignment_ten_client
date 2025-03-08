@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Movies = () => {
+const LoadingSpinner = () => {
     return (
         <div>
             
@@ -8,4 +8,4 @@ const Movies = () => {
     );
 };
 
-export default Movies;
+export default LoadingSpinner;
