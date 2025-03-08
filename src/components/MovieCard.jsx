@@ -38,7 +38,7 @@ const MovieCard = ({ movie }) => {
         </div>
         <Link
           to={`/movie/${_id}`}
-          className="block w-full bg-blue-600 text-white text-center py-2 rounded hover:bg-blue-700 transition duration-300"
+          className="block w-full bg-red-600 hover:bg-red-700 text-white text-center py-2 rounded transition duration-300"
         >
           See Details
         </Link>

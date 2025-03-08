@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import MovieCard from "./MovieCard";
 import LoadingSpinner from "./LoadingSpinner";
+import { ThemeContext } from "../provider/ThemeProvider";
 
 const FeaturedMovies = () => {
   const [featuredMovies, setFeaturedMovies] = useState([]);
+  
+  const { theme } = useContext(ThemeContext);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -34,12 +37,16 @@ const FeaturedMovies = () => {
       <div>
         <section className="container mx-auto px-4 py-12">
           <div className="flex justify-between items-center mb-8">
-            <h2 className="text-3xl font-bold">
+            <h2
+              className={`text-3xl font-bold ${
+                theme === "dark" ? "text-white" : "text-black"
+              }`}
+            >
               Featured Movies
             </h2>
             <Link
               to="/movies"
-              className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 font-medium"
+              className="text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300 font-medium"
             >
               View All →
             </Link>
@@ -58,7 +65,7 @@ const FeaturedMovies = () => {
           <div className="text-center mt-10">
             <Link
               to="/movies"
-              className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full inline-block transition duration-300"
+              className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-full inline-block transition duration-300"
             >
               See All Movies
             </Link>

@@ -9,6 +9,13 @@ const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
   const { theme, toggleTheme } = useContext(ThemeContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  // Close mobile menu on route change
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, []);
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
   const handleLogout = () => {
     logOut()
       .then(() => {
@@ -18,13 +25,6 @@ const Navbar = () => {
         console.error(error);
       });
   };
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-  // Close mobile menu on route change
-  useEffect(() => {
-    setIsMenuOpen(false);
-  }, []);
   const navLinkStyles = ({ isActive }) => {
     return {
       fontWeight: isActive ? "bold" : "normal",

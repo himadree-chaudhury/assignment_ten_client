@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Header from '../components/Header';
 import FeaturedMovies from '../components/FeaturedMovies';
 import { FaFilm, FaDesktop, FaStar, FaUsers } from "react-icons/fa";
 import { Link } from 'react-router-dom';
+import { ThemeContext } from '../provider/ThemeProvider';
 
 const HomeLayout = () => {
+  
+    const { theme} = useContext(ThemeContext);
     return (
       <section>
         <div>
@@ -70,7 +73,9 @@ const HomeLayout = () => {
         </section>
 
         {/* Extra Section 2: Features */}
-        <section className="py-12 bg-white">
+        <section
+          className={`py-12 ${theme === "dark" ? "text-white" : "text-black"}`}
+        >
           <div className="container mx-auto px-4">
             <h2 className="text-3xl font-bold mb-10 text-center">
               Why Choose CineSphere?
@@ -82,7 +87,11 @@ const HomeLayout = () => {
                   <FaFilm className="text-primary text-3xl" />
                 </div>
                 <h3 className="text-xl font-bold mb-2">Huge Collection</h3>
-                <p className="text-gray-600">
+                <p
+                  className={`${
+                    theme === "dark" ? "dark:text-gray-400" : "text-gray-800"
+                  }`}
+                >
                   Access thousands of movies across all genres and eras, from
                   classics to the latest releases.
                 </p>
@@ -95,7 +104,11 @@ const HomeLayout = () => {
                 <h3 className="text-xl font-bold mb-2">
                   User-Friendly Interface
                 </h3>
-                <p className="text-gray-600">
+                <p
+                  className={`${
+                    theme === "dark" ? "dark:text-gray-400" : "text-gray-800"
+                  }`}
+                >
                   Our intuitive design makes it easy to browse, search, and
                   discover new movies.
                 </p>
@@ -108,7 +121,11 @@ const HomeLayout = () => {
                 <h3 className="text-xl font-bold mb-2">
                   Personalized Favorites
                 </h3>
-                <p className="text-gray-600">
+                <p
+                  className={`${
+                    theme === "dark" ? "dark:text-gray-400" : "text-gray-800"
+                  }`}
+                >
                   Create your own collection of favorite movies to watch later
                   or recommend to friends.
                 </p>
@@ -119,7 +136,11 @@ const HomeLayout = () => {
                   <FaUsers className="text-primary text-3xl" />
                 </div>
                 <h3 className="text-xl font-bold mb-2">Community Reviews</h3>
-                <p className="text-gray-600">
+                <p
+                  className={`${
+                    theme === "dark" ? "dark:text-gray-400" : "text-gray-800"
+                  }`}
+                >
                   Read honest reviews and ratings from other movie enthusiasts
                   to find your next watch.
                 </p>

@@ -1,16 +1,14 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
 import { Outlet } from 'react-router-dom';
-import ThemeToggle from '../components/ThemeToggle';
+import Footer from '../components/Footer';
 
 const RootLayout = () => {
     return (
       <div>
-        <div className="flex justify-end items-center">
-          <ThemeToggle></ThemeToggle>
-        </div>
         <Navbar></Navbar>
         <Outlet></Outlet>
+        <Footer></Footer>
       </div>
     );
 };
