@@ -28,7 +28,6 @@ const FeaturedMovies = () => {
     fetchFeaturedMovies();
   }, []);
     
-    console.log(featuredMovies);
 
   return (
     <section>
