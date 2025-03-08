@@ -5,7 +5,7 @@ import ErrorPage from "../pages/ErrorPage";
 import HomeLayout from "../layouts/HomeLayout";
 import AllMovies from "../pages/AllMovies";
 import AddMovie from "../pages/AddMovie";
-import Favorites from "../pages/Favorites";
+import MyFavorites from "../pages/MyFavorites";
 import Blogs from "../pages/Blogs";
 import MovieDetails from "../pages/MovieDetails";
 
@@ -35,7 +35,7 @@ const route = createBrowserRouter([
       },
       {
         path: "/my-favorites",
-        element: <Favorites></Favorites>,
+        element: <MyFavorites></MyFavorites>,
       },
       {
         path: "/blog",
