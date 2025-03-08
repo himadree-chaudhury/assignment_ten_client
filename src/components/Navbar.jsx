@@ -55,7 +55,7 @@ const Navbar = () => {
             <p className="text-2xl font-semibold flex justify-center items-center ml-5 lg:ml-0">
               <img src={logo} alt="CineSphere" className="w-16" />
               Cine
-              <span className="bg-accent rounded-sm p-1 text-black">
+              <span className="bg-red-600 rounded-sm p-1 text-black">
                 Sphere
               </span>
             </p>
@@ -89,9 +89,9 @@ const Navbar = () => {
               </li>
             </ul>
           </div>
-          <div className="navbar-end space-x-1 hidden lg:flex">
-            <Link className="btn btn-accent rounded">Login</Link>
-            <Link className="btn btn-accent rounded">Register</Link>
+          <div className="navbar-end space-x-1 hidden  lg:flex">
+            <Link className="btn bg-red-600 text-white rounded">Login</Link>
+            <Link className="btn bg-red-600 rounded">Register</Link>
           </div>
         </div>
       </div>
