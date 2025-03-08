@@ -3,17 +3,37 @@ import { createBrowserRouter } from 'react-router-dom';
 import RootLayout from '../layouts/RootLayout';
 import ErrorPage from '../pages/ErrorPage';
 import HomeLayout from '../layouts/HomeLayout';
+import AllMovies from '../pages/AllMovies';
+import AddMovies from '../pages/AddMovies';
+import Favorites from '../pages/Favorites';
+import Blogs from '../pages/Blogs';
 
 
 const route = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout></RootLayout>,
-    errorElement:<ErrorPage></ErrorPage>,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         path: "/",
         element: <HomeLayout></HomeLayout>,
+      },
+      {
+        path: "/all-movies",
+        element: <AllMovies></AllMovies>,
+      },
+      {
+        path: "/add-movie",
+        element: <AddMovies></AddMovies>,
+      },
+      {
+        path: "/my-favorites",
+        element: <Favorites></Favorites>,
+      },
+      {
+        path: "/blog",
+        element:<Blogs></Blogs>
       },
       // {
       //   path: "/auth",

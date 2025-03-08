@@ -84,7 +84,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  to="/movies"
+                  to="/all-movies"
                   className="text-gray-400 hover:text-white transition-colors duration-300"
                 >
                   Movies
@@ -100,7 +100,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  to="/favorites"
+                  to="/my-favorites"
                   className="text-gray-400 hover:text-white transition-colors duration-300"
                 >
                   My Favorites
@@ -108,10 +108,10 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  to="/about"
+                  to="/blog"
                   className="text-gray-400 hover:text-white transition-colors duration-300"
                 >
-                  About
+                  Blog
                 </Link>
               </li>
             </ul>
@@ -123,11 +123,11 @@ const Footer = () => {
             <div className="space-y-3">
               <div className="flex items-center">
                 <FaEnvelope className="text-primary mr-2" />
-                <span className="text-gray-400">contact@movieportal.com</span>
+                <span className="text-gray-400">contact@cinesphere.com</span>
               </div>
               <div className="flex items-center">
                 <FaPhone className="text-primary mr-2" />
-                <span className="text-gray-400">+1 (555) 123-4567</span>
+                <span className="text-gray-400">+88 012-345-67890</span>
               </div>
             </div>
           </div>

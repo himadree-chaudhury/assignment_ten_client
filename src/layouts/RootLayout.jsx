@@ -5,10 +5,14 @@ import Footer from '../components/Footer';
 
 const RootLayout = () => {
     return (
-      <div>
+      <div className="overflow-hidden">
         <Navbar></Navbar>
-        <Outlet></Outlet>
-        <Footer></Footer>
+        <div className="flex flex-col min-h-screen">
+          <main className="flex-grow mt-20">
+            <Outlet></Outlet>
+          </main>
+          <Footer></Footer>
+        </div>
       </div>
     );
 };

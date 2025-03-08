@@ -12,7 +12,7 @@ const Navbar = () => {
   // Close mobile menu on route change
   useEffect(() => {
     setIsMenuOpen(false);
-  }, []);
+  }, [location]);
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -147,14 +147,9 @@ const Navbar = () => {
             <div className="md:hidden flex items-center">
               <button
                 onClick={toggleTheme}
-                className={`p-2 mr-2 rounded-full ${
+                className={`p-2 mr-2 rounded-full cursor-pointer ${
                   theme === "dark" ? "bg-gray-700" : "bg-gray-200"
                 }`}
-                aria-label={
-                  theme === "dark"
-                    ? "Switch to light mode"
-                    : "Switch to dark mode"
-                }
               >
                 {theme === "dark" ? (
                   <FaSun className="text-yellow-400" />
@@ -164,12 +159,11 @@ const Navbar = () => {
               </button>
               <button
                 onClick={toggleMenu}
-                className={`p-2 rounded-md ${
+                className={`p-2 rounded-md cursor-pointer ${
                   theme === "dark"
                     ? "bg-gray-700 hover:bg-gray-600"
                     : "bg-gray-200 hover:bg-gray-300"
                 } transition-colors`}
-                aria-label="Toggle menu"
               >
                 {isMenuOpen ? <FaTimes /> : <FaBars />}
               </button>
@@ -185,31 +179,36 @@ const Navbar = () => {
             <div className="flex flex-col space-y-3 px-4">
               <NavLink
                 to="/"
-                className="py-2 px-3 rounded hover:bg-opacity-10 hover:bg-black"
+                className="py-2 px-3 rounded hover:bg-opacity-10 hover:bg-black hover:text-white"
+                onClick={() => setIsMenuOpen(false)}
               >
                 Home
               </NavLink>
               <NavLink
                 to="/all-movies"
-                className="py-2 px-3 rounded hover:bg-opacity-10 hover:bg-black"
+                className="py-2 px-3 rounded hover:bg-opacity-10 hover:bg-black hover:text-white"
+                onClick={() => setIsMenuOpen(false)}
               >
                 All Movies
               </NavLink>
               <NavLink
                 to="/add-movie"
-                className="py-2 px-3 rounded hover:bg-opacity-10 hover:bg-black"
+                className="py-2 px-3 rounded hover:bg-opacity-10 hover:bg-black hover:text-white"
+                onClick={() => setIsMenuOpen(false)}
               >
                 Add Movie
               </NavLink>
               <NavLink
                 to="/my-favorites"
-                className="py-2 px-3 rounded hover:bg-opacity-10 hover:bg-black"
+                className="py-2 px-3 rounded hover:bg-opacity-10 hover:bg-black hover:text-white"
+                onClick={() => setIsMenuOpen(false)}
               >
                 My Favorites
               </NavLink>
               <NavLink
                 to="/blog"
-                className="py-2 px-3 rounded hover:bg-opacity-10 hover:bg-black"
+                className="py-2 px-3 rounded hover:bg-opacity-10 hover:bg-black hover:text-white"
+                onClick={() => setIsMenuOpen(false)}
               >
                 Blog
               </NavLink>
