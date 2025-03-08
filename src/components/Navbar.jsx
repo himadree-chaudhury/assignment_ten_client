@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import logo from "../assets/cineSphere.svg";
+import logo from "../assets/logo.png";
 
 const Navbar = () => {
   return (
@@ -53,7 +53,7 @@ const Navbar = () => {
               </ul>
             </div>
             <p className="text-2xl font-semibold flex justify-center items-center ml-5 lg:ml-0">
-              <img src={logo} alt="CineSphere" className="w-16" />
+              <img src={logo} alt="CineSphere" className="h-12 object-cover" />
               Cine
               <span className="bg-red-600 rounded-sm p-1 text-black">
                 Sphere

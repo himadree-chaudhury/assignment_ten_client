@@ -35,7 +35,7 @@ const FeaturedMovies = () => {
       <div>
         <section className="container mx-auto px-4 py-12">
           <div className="flex justify-between items-center mb-8">
-            <h2 className="text-3xl font-bold text-black dark:text-white">
+            <h2 className="text-3xl font-bold">
               Featured Movies
             </h2>
             <Link
