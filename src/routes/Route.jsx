@@ -4,7 +4,7 @@ import RootLayout from "../layouts/RootLayout";
 import ErrorPage from "../pages/ErrorPage";
 import HomeLayout from "../layouts/HomeLayout";
 import AllMovies from "../pages/AllMovies";
-import AddMovies from "../pages/AddMovies";
+import AddMovie from "../pages/AddMovie";
 import Favorites from "../pages/Favorites";
 import Blogs from "../pages/Blogs";
 import MovieDetails from "../pages/MovieDetails";
@@ -26,11 +26,12 @@ const route = createBrowserRouter([
       {
         path: "/all-movies/:id",
         element: <MovieDetails></MovieDetails>,
-        loader: ({ params }) => fetch(`http://localhost:5000/movies/${params.id}`),
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/movies/${params.id}`),
       },
       {
         path: "/add-movie",
-        element: <AddMovies></AddMovies>,
+        element: <AddMovie></AddMovie>,
       },
       {
         path: "/my-favorites",

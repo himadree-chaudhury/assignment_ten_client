@@ -20,7 +20,10 @@ const HomeLayout = () => {
         <section className="py-12 bg-gray-100 dark:bg-gray-800">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl font-bold text-center mb-10 text-gray-900 dark:text-white">
-              Browse by Category
+              Browse
+              <span className="bg-red-600 rounded-sm p-[0.15rem] text-white">
+                Category
+              </span>
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
               {[
@@ -78,7 +81,10 @@ const HomeLayout = () => {
         >
           <div className="container mx-auto px-4">
             <h2 className="text-3xl font-bold mb-10 text-center">
-              Why Choose CineSphere?
+              Why
+              <span className="bg-red-600 rounded-sm p-[0.15rem] text-white">
+                CineSphere?
+              </span>
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">

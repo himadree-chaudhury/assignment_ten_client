@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 // import { toast } from "react-hot-toast";
 import {
   FaStar,
@@ -199,7 +199,7 @@ const MovieDetails = () => {
               </p>
             </div>
             <div className="mt-8 flex flex-wrap gap-4">
-              <button
+              <Link
                 // onClick={handleFavoriteToggle}
                 // disabled={checkingFavorite}
                 className={`flex items-center px-4 py-2 rounded-lg font-medium transition-all duration-300 cursor-pointer bg-gray-700 text-white hover:bg-gray-800
@@ -211,19 +211,19 @@ const MovieDetails = () => {
                   <FaRegHeart className="mr-2" />
                 )}
                 {isFavorite ? "Remove from Favorites" : "Add to Favorites"}
-              </button>
-              <button
+              </Link>
+              <Link
                 // onClick={() => navigate(`/update-movie/${id}`)}
                 className="flex items-center px-4 py-2 rounded-lg font-medium bg-blue-700 text-white hover:bg-blue-800 transition-all duration-300 cursor-pointer"
               >
                 <FaEdit className="mr-2" /> Update Movie
-              </button>
-              <button
+              </Link>
+              <Link
                 // onClick={handleDelete}
                 className="flex items-center px-4 py-2 rounded-lg font-medium bg-red-700 text-white hover:bg-red-800 transition-all duration-300 cursor-pointer"
               >
                 <FaTrash className="mr-2" /> Delete Movie
-              </button>
+              </Link>
             </div>
           </div>
         </div>

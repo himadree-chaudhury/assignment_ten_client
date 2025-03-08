@@ -42,7 +42,10 @@ const FeaturedMovies = () => {
                 theme === "dark" ? "text-white" : "text-black"
               }`}
             >
-              Featured Movies
+              Featured
+              <span className="bg-red-600 rounded-sm p-[0.15rem] text-white">
+                Cinema
+              </span>
             </h2>
             <Link
               to="/movies"
