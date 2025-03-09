@@ -8,6 +8,8 @@ import AddMovie from "../pages/AddMovie";
 import MyFavorites from "../pages/MyFavorites";
 import Blogs from "../pages/Blogs";
 import MovieDetails from "../pages/MovieDetails";
+import Login from "../pages/Login";
+import Register from "../pages/Register";
 
 const route = createBrowserRouter([
   {
@@ -41,49 +43,14 @@ const route = createBrowserRouter([
         path: "/blog",
         element: <Blogs></Blogs>,
       },
-      // {
-      //   path: "/auth",
-      //   element: <AuthLayout></AuthLayout>,
-      //   children: [
-      //     {
-      //       path: "/auth/login",
-      //       element: <Login></Login>,
-      //     },
-      //     {
-      //       path: "/auth/register",
-      //       element: <Register></Register>,
-      //     },
-      //     {
-      //       path: "/auth/resetPassword",
-      //       element: <PasswordReset></PasswordReset>,
-      //     },
-      //     {
-      //       path: "/auth/updateProfile",
-      //       element: (
-      //         <PrivateRoute>
-      //           <UpdateProfile></UpdateProfile>
-      //         </PrivateRoute>
-      //       ),
-      //     },
-      //     {
-      //       path: "/auth/userProfile",
-      //       element: (
-      //         <PrivateRoute>
-      //           <UserProfile></UserProfile>
-      //         </PrivateRoute>
-      //       ),
-      //     },
-      //   ],
-      // },
-      // {
-      //   path: "/:title",
-      //   element: (
-      //     <PrivateRoute>
-      //       <TripDetails></TripDetails>
-      //     </PrivateRoute>
-      //   ),
-      //   loader: () => fetch(`/tripData.json`),
-      // },
+      {
+        path: "/login",
+        element: <Login></Login>,
+      },
+      {
+        path: "/register",
+        element: <Register></Register>,
+      },
     ],
   },
 ]);

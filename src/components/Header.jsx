@@ -23,7 +23,7 @@ const Header = () => {
               }}
               navigation={false}
               modules={[Autoplay, Pagination, Navigation]}
-              className="h-[70vh]"
+              className="h-[60vh]"
             >
               <SwiperSlide>
                 <div className="relative w-full h-full bg-gradient-to-r from-black to-transparent">

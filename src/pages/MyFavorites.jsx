@@ -97,8 +97,8 @@ const MyFavorites = () => {
             You haven't added any favorites yet
           </h3>
           <Link
-            to="/movies"
-            className="bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition duration-300"
+            to="/all-movies"
+            className="bg-red-600 text-white font-bold px-6 py-3 rounded-full hover:bg-red-700 transition duration-300"
           >
             Browse Movies
           </Link>
@@ -134,7 +134,7 @@ const MyFavorites = () => {
                 <div className="flex space-x-2">
                   <Link
                     to={`/movie/${movie._id}`}
-                    className="flex-1 bg-blue-600 text-white text-center py-2 rounded hover:bg-blue-700 transition duration-300"
+                    className="flex-1 bg-red-600 text-white text-center py-2 rounded hover:bg-red-700 transition duration-300"
                   >
                     See Details
                   </Link>

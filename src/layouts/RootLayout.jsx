@@ -8,7 +8,7 @@ const RootLayout = () => {
       <div className="overflow-hidden">
         <Navbar></Navbar>
         <div className="flex flex-col min-h-screen">
-          <main className="grow mt-20">
+          <main className="grow mt-16">
             <Outlet></Outlet>
           </main>
           <Footer></Footer>
