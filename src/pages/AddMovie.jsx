@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import { Rating } from "react-simple-star-rating";
 import { ThemeContext } from "../provider/ThemeProvider";
+import { AuthContext } from "../provider/AuthProvider";
 // import { toast } from "react-hot-toast";
-// import { useAuth } from "../contexts/AuthContext";
 
 const currentYear = new Date().getFullYear();
 const years = Array.from({ length: 100 }, (_, i) => currentYear - i);
@@ -32,7 +32,7 @@ const genres = [
 ];
 
 const AddMovie = () => {
-  //   const { currentUser } = useAuth();
+    const { user } = useContext(AuthContext);
 
   const { theme } = useContext(ThemeContext);
   const navigate = useNavigate();
@@ -66,15 +66,15 @@ const AddMovie = () => {
 
       const movieData = {
         ...data,
-        // userEmail: currentUser.email,
+        userEmail: user.email,
       };
 
-      //   const token = await currentUser.getIdToken();
+        const token = await user.getIdToken();
       const response = await fetch(`${import.meta.env.VITE_API_URL}/movies`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          //   Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(movieData),
       });

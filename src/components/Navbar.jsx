@@ -118,7 +118,7 @@ const Navbar = () => {
                       theme === "dark"
                         ? "bg-red-600 hover:bg-red-700"
                         : "bg-red-500 hover:bg-red-600"
-                    } text-white transition-colors duration-300`}
+                    } text-white transition-colors duration-300 cursor-pointer`}
                   >
                     Logout
                   </button>
@@ -230,7 +230,7 @@ const Navbar = () => {
                       theme === "dark"
                         ? "bg-red-600 hover:bg-red-700"
                         : "bg-red-500 hover:bg-red-600"
-                    } text-white transition-colors`}
+                    } text-white transition-colors cursor-pointer`}
                   >
                     Logout
                   </button>
@@ -239,13 +239,13 @@ const Navbar = () => {
                 <div className="flex flex-col text-center space-y-3 border-t pt-3 mt-3">
                   <Link
                     to="/login"
-                    className={`bg-red-600 text-white px-4 py-2 rounded-md font-bold hover:bg-red-700 transition-all duration-300`}
+                    className={`bg-red-600 text-white px-4 py-2 rounded-md font-bold hover:bg-red-700 transition-all duration-300 cursor-pointer`}
                   >
                     Login
                   </Link>
                   <Link
                     to="/register"
-                    className={`bg-red-600 text-white px-4 py-2 rounded-md font-bold hover:bg-red-700 transition-all duration-300`}
+                    className={`bg-red-600 text-white px-4 py-2 rounded-md font-bold hover:bg-red-700 transition-all duration-300 cursor-pointer`}
                   >
                     Register
                   </Link>

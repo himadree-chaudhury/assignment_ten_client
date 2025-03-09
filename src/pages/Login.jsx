@@ -8,7 +8,7 @@ import { ThemeContext } from '../provider/ThemeProvider';
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-    const { loginUser, googleSignIn } = useContext(AuthContext);
+    const { signIn, signInWithGoogle } = useContext(AuthContext);
     
   const { theme} = useContext(ThemeContext);
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      await loginUser(email, password);
+      await signIn(email, password);
     //   toast.success("Login successful!");
       navigate(from, { replace: true });
     } catch (error) {
@@ -28,9 +28,9 @@ const Login = () => {
     }
   };
 
-  const handleGoogleSignIn = async () => {
+  const handleSignInWithGoogle = async () => {
     try {
-      await googleSignIn();
+      await signInWithGoogle();
     //   toast.success("Login successful!");
       navigate(from, { replace: true });
     } catch (error) {
@@ -131,8 +131,8 @@ const Login = () => {
 
           <div className="mt-6">
             <button
-              onClick={handleGoogleSignIn}
-              className="w-full flex items-center justify-center gap-2 bg-red-600 text-white font-bold rounded-md py-2 px-4 hover:bg-red-700 transition duration-300"
+              onClick={handleSignInWithGoogle}
+              className="w-full flex items-center justify-center gap-2 bg-red-600 text-white font-bold rounded-md py-2 px-4 hover:bg-red-700 transition duration-300 cursor-pointer"
             >
               <FaGoogle className="text-white" />
               <span>Sign in with Google</span>

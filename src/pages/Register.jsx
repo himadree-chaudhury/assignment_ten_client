@@ -14,7 +14,7 @@ const Register = () => {
 
     
   const { theme} = useContext(ThemeContext);
-  const { registerUser, updateUserProfile, googleSignIn } = useContext(AuthContext);
+  const { createUser, updateUserProfile, signInWithGoogle } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const validatePassword = (pass) => {
@@ -45,7 +45,7 @@ const Register = () => {
     }
 
     try {
-      const result = await registerUser(email, password);
+      const result = await createUser(email, password);
       await updateUserProfile(name, photoURL);
 
     //   toast.success("Registration successful!");
@@ -55,9 +55,9 @@ const Register = () => {
     }
   };
 
-  const handleGoogleSignIn = async () => {
+  const handleSignInWithGoogle = async () => {
     try {
-      await googleSignIn();
+      await signInWithGoogle();
     //   toast.success("Registration successful!");
       navigate("/");
     } catch (error) {
@@ -199,7 +199,7 @@ const Register = () => {
 
           <div className="mt-6">
             <button
-              onClick={handleGoogleSignIn}
+              onClick={handleSignInWithGoogle}
               className="w-full flex items-center justify-center gap-2 font-bold bg-red-600 hover:bg-red-700 text-white rounded-md py-2 px-4 transition duration-300 cursor-pointer"
             >
               <FaGoogle className="text-white" />
