@@ -10,6 +10,7 @@ import Blogs from "../pages/Blogs";
 import MovieDetails from "../pages/MovieDetails";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
+import PrivateRoute from "./PrivateRoute";
 
 const route = createBrowserRouter([
   {
@@ -33,11 +34,19 @@ const route = createBrowserRouter([
       },
       {
         path: "/add-movie",
-        element: <AddMovie></AddMovie>,
+        element: (
+          <PrivateRoute>
+            <AddMovie></AddMovie>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/my-favorites",
-        element: <MyFavorites></MyFavorites>,
+        element: (
+          <PrivateRoute>
+            <MyFavorites></MyFavorites>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/blog",

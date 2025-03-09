@@ -70,7 +70,7 @@ const Navbar = () => {
                 My Favorites
               </NavLink>
               <NavLink to="/blog" style={navLinkStyles} className="py-2">
-                Blog
+                Spotlight
               </NavLink>
             </div>
 
@@ -208,7 +208,7 @@ const Navbar = () => {
                 className="py-2 px-3 rounded hover:bg-opacity-10 hover:bg-black hover:text-white"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Blog
+                Spotlight
               </NavLink>
 
               {user ? (

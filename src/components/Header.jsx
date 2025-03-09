@@ -41,7 +41,7 @@ const Header = () => {
                       genres
                     </p>
                     <Link
-                      to="/movies"
+                      to="/all-movies"
                       className="bg-red-600 text-white px-6 py-3 rounded-full font-bold hover:bg-red-700 transition duration-300"
                     >
                       Browse All Movies

@@ -7,6 +7,7 @@ import {
   FaGithub,
   FaEnvelope,
   FaPhone,
+  FaMapMarkerAlt,
 } from "react-icons/fa";
 
 import logo from "../assets/logo.png";
@@ -128,6 +129,12 @@ const Footer = () => {
               <div className="flex items-center">
                 <FaPhone className="text-primary mr-2" />
                 <span className="text-gray-400">+88 012-345-67890</span>
+              </div>
+              <div className="flex items-center">
+                <FaMapMarkerAlt className="text-primary mr-2" />
+                <span className="text-gray-400">
+                  123 Cineplex Avenue, Film City
+                </span>
               </div>
             </div>
           </div>

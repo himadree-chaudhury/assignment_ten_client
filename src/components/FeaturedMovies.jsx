@@ -48,7 +48,7 @@ const FeaturedMovies = () => {
               </span>
             </h2>
             <Link
-              to="/movies"
+              to="/all-movies"
               className="text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300 font-medium"
             >
               View All →
@@ -67,7 +67,7 @@ const FeaturedMovies = () => {
 
           <div className="text-center mt-10">
             <Link
-              to="/movies"
+              to="/all-movies"
               className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-full inline-block transition duration-300"
             >
               See All Movies
