@@ -11,6 +11,7 @@ import MovieDetails from "../pages/MovieDetails";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import PrivateRoute from "./PrivateRoute";
+import UpdateMovie from "../pages/UpdateMovie";
 
 const route = createBrowserRouter([
   {
@@ -39,6 +40,10 @@ const route = createBrowserRouter([
             <AddMovie></AddMovie>
           </PrivateRoute>
         ),
+      },
+      {
+        path: "/update-movie",
+        element: <UpdateMovie></UpdateMovie>,
       },
       {
         path: "/my-favorites",

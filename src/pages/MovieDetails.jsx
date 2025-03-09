@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link, useLoaderData } from "react-router-dom";
+import { Link, useLoaderData, useNavigate } from "react-router-dom";
 // import { toast } from "react-hot-toast";
 import {
   FaStar,
@@ -16,7 +16,7 @@ import { ThemeContext } from "../provider/ThemeProvider";
 
 const MovieDetails = () => {
   //   const { id } = useParams();
-  //   const navigate = useNavigate();
+    const navigate = useNavigate();
   //   const { currentUser } = useAuth();
 
   const { theme } = useContext(ThemeContext);
