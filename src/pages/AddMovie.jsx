@@ -57,7 +57,7 @@ const AddMovie = () => {
 
   const onSubmit = async (data) => {
     if (data.Rating === 0) {
-      //   toast.error("Please select a rating");
+        // toast.error("Please select a rating");
       return;
     }
 
@@ -81,11 +81,11 @@ const AddMovie = () => {
         throw new Error("Failed to add movie");
       }
 
-      //   toast.success("Movie added successfully!");
+        // toast.success("Movie added successfully!");
       navigate("/all-movies");
     } catch (error) {
       console.error("Error adding movie:", error);
-      //   toast.error(error.message || "Failed to add movie");
+        // toast.error(error.message || "Failed to add movie");
     } finally {
       setLoading(false);
     }

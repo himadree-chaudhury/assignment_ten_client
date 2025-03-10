@@ -21,21 +21,21 @@ const Login = () => {
 
     try {
       await signIn(email, password);
-      //   toast.success("Login successful!");
+        // toast.success("Login successful!");
       navigate(from, { replace: true });
     } catch (error) {console.log(error);
-      //   toast.error(error.message);
+        // toast.error(error.message);
     }
   };
 
   const handleSignInWithGoogle = async () => {
     try {
       await signInWithGoogle();
-      //   toast.success("Login successful!");
+        // toast.success("Login successful!");
       navigate(from, { replace: true });
     } catch (error) {
       console.log(error);
-      //   toast.error(error.message);
+        // toast.error(error.message);
     }
   };
 

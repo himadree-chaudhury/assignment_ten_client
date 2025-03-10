@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+// import Swal from "sweetalert2";
 // import { toast } from "react-hot-toast";
 import {
   FaStar,
@@ -47,7 +48,7 @@ const MovieDetails = () => {
     };
 
     fetchMovieDetails();
-  }, [id,user]);
+  }, [id, user]);
 
   useEffect(() => {
     if (!user || !movie) return;
@@ -58,7 +59,9 @@ const MovieDetails = () => {
         const response = await fetch(`http://localhost:5000/favorites/${id}`);
         if (!response.ok) throw new Error("Failed to check favorite status");
         const data = await response.json();
-        setIsFavorite(data?.movieId && data.User_Email===user.email ? true : false);
+        setIsFavorite(
+          data?.movieId && data.User_Email === user.email ? true : false
+        );
       } catch (error) {
         console.error("Error checking favorite status:", error);
       } finally {
@@ -112,6 +115,12 @@ const MovieDetails = () => {
         }
       );
       if (!response.ok) throw new Error("Failed to update favorites");
+        
+        // Swal.fire({
+        //   title: "Drag me!",
+        //   icon: "success",
+        // });
+
       setIsFavorite(!isFavorite);
       // toast.success(
       //   isFavorite ? "Removed from favorites" : "Added to favorites"
@@ -124,9 +133,11 @@ const MovieDetails = () => {
 
   const userActivityAlert = () => {
     // toast.error("You didn't add this movie. Sorry!")
-  }
+  };
 
-  if (loading) return <LoadingSpinner />;
+  if (loading) {
+    return <LoadingSpinner></LoadingSpinner>;
+  }
   if (!movie)
     return (
       <div className="container mx-auto px-4 py-16 text-center">
@@ -215,7 +226,10 @@ const MovieDetails = () => {
                 {isFavorite ? "Remove from Favorites" : "Add to Favorites"}
               </Link>
               {movieUser ? (
-                <Link onClick={userActivityAlert} className="flex items-center px-4 py-2 rounded-lg font-medium bg-blue-700 text-white hover:bg-blue-800 transition-all duration-300 cursor-pointer">
+                <Link
+                  onClick={userActivityAlert}
+                  className="flex items-center px-4 py-2 rounded-lg font-medium bg-blue-700 text-white hover:bg-blue-800 transition-all duration-300 cursor-pointer"
+                >
                   <FaEdit className="mr-2" /> Update Movie
                 </Link>
               ) : (
@@ -227,7 +241,8 @@ const MovieDetails = () => {
                 </Link>
               )}
               {movieUser ? (
-                <Link onClick={userActivityAlert}
+                <Link
+                  onClick={userActivityAlert}
                   className="flex items-center px-4 py-2 rounded-lg font-medium bg-red-700 text-white hover:bg-red-800 transition-all duration-300 cursor-pointer"
                 >
                   <FaTrash className="mr-2" /> Delete Movie

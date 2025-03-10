@@ -4,6 +4,7 @@ import MovieCard from "../components/MovieCard";
 import LoadingSpinner from "../components/LoadingSpinner";
 import { FaSearch } from "react-icons/fa";
 import { ThemeContext } from "../provider/ThemeProvider";
+import Test from "../components/Test";
 
 const AllMovies = () => {
   const [movies, setMovies] = useState([]);
@@ -77,6 +78,7 @@ const AllMovies = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
+      <Test></Test>
       <h1
         className={`text-4xl font-bold mb-8 text-center ${
           theme === "dark" ? "text-white" : "text-black"

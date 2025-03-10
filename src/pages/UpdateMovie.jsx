@@ -34,8 +34,6 @@ const genres = [
 
 const UpdateMovie = () => {
   const { id } = useParams();
-  // const { user } = useContext(AuthContext);
-
   const { theme } = useContext(ThemeContext);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -73,7 +71,7 @@ const UpdateMovie = () => {
         });
       } catch (error) {
         console.error("Error fetching movie:", error);
-        //   toast.error("Failed to load movie data");
+          // toast.error("Failed to load movie data");
         navigate(-1);
       } finally {
         setFetchingMovie(false);

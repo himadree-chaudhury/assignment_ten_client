@@ -48,15 +48,15 @@ const MyFavorites = () => {
         throw new Error("Failed to remove from favorites");
       }
       setFavorites(favorites.filter((movie) => movie.movieId !== movieId));
-      //   toast.success("Removed from favorites");
+        // toast.success("Removed from favorites");
     } catch (error) {
       console.error("Error removing favorite:", error);
-      //   toast.error("Failed to remove from favorites");
+        // toast.error("Failed to remove from favorites");
     }
   };
 
   if (loading) {
-    return <LoadingSpinner />;
+    return <LoadingSpinner></LoadingSpinner>;
   }
 
   return (

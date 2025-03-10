@@ -2,13 +2,14 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { FaCalendarAlt, FaUser, FaTag } from "react-icons/fa";
 import { ThemeContext } from "../provider/ThemeProvider";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const Blogs = () => {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
-    const [currentCategory, setCurrentCategory] = useState("All");
-    
-  const { theme} = useContext(ThemeContext);
+  const [currentCategory, setCurrentCategory] = useState("All");
+
+  const { theme } = useContext(ThemeContext);
 
   const categories = [
     "All",
@@ -47,17 +48,8 @@ const Blogs = () => {
     setCurrentCategory(category);
   };
 
-  // const handleBlogClick = (id) => {
-  //   // In a real implementation, this would navigate to a detailed blog page
-  //   navigate(`/blogs/${id}`);
-  // };
-
   if (loading) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
-      </div>
-    );
+    return <LoadingSpinner></LoadingSpinner>;
   }
 
   return (
@@ -141,7 +133,7 @@ const Blogs = () => {
               className="h-48 bg-cover bg-center"
               style={{ backgroundImage: `url(${blog.image})` }}
             ></div>
-            <div className="p-6 flex flex-col flex-grow">
+            <div className="p-6 flex flex-col grow">
               <span className="bg-gray-700 w-fit text-gray-200 text-xs font-medium px-2.5 py-0.5 rounded-full">
                 {blog.category}
               </span>
@@ -169,7 +161,11 @@ const Blogs = () => {
       </div>
 
       {/* Newsletter Subscription */}
-      <div className="rounded-xl p-8 mt-16">
+      <div
+        className={`rounded-xl p-8 mt-16 ${
+          theme === "dark" ? "bg-gray-800" : "bg-gray-100"
+        }`}
+      >
         <div className="text-center max-w-2xl mx-auto">
           <h3
             className={`text-2xl font-bold mb-3 ${
@@ -193,8 +189,8 @@ const Blogs = () => {
               placeholder="Your email address"
               className={`flex-grow px-4 py-3 rounded-lg focus:ring-2 focus:ring-red-600 outline-none border border-red-200 focus:border-0 ${
                 theme === "dark"
-                  ? "text-white placeholder-gray-400"
-                  : "text-black"
+                  ? "bg-gray-700 text-white placeholder-gray-400"
+                  : "bg-white text-black"
               }`}
             />
             <button className="bg-red-600 hover:bg-red-700 text-white text-lg font-bold px-6 py-3 rounded-lg transition-colors cursor-pointer">

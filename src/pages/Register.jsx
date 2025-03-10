@@ -48,21 +48,21 @@ const Register = () => {
       await createUser(email, password);
       await updateUserProfile(name, photoURL);
 
-      //   toast.success("Registration successful!");
+        // toast.success("Registration successful!");
       navigate("/");
     } catch (error) {console.log(error);
-      //   toast.error(error.message);
+        // toast.error(error.message);
     }
   };
 
   const handleSignInWithGoogle = async () => {
     try {
       await signInWithGoogle();
-      //   toast.success("Registration successful!");
+        // toast.success("Registration successful!");
       navigate("/");
     } catch (error) {
       console.log(error);
-      //   toast.error(error.message);
+        // toast.error(error.message);
     }
   };
 

@@ -12,11 +12,11 @@ import {
   FaChevronLeft,
 } from "react-icons/fa";
 import { ThemeContext } from "../provider/ThemeProvider";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const BlogDetails = () => {
   const [blog, setBlog] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [relatedPosts, setRelatedPosts] = useState([]);
   const { id } = useParams();
   const { theme } = useContext(ThemeContext);
   const navigate = useNavigate();
@@ -31,17 +31,6 @@ const BlogDetails = () => {
         }
         const data = await response.json();
         setBlog(data);
-
-        // Fetch related posts with the same category
-        const relatedResponse = await fetch(
-          `http://localhost:5000/blogs?category=${data.category}&_limit=3`
-        );
-        if (!relatedResponse.ok) {
-          throw new Error(`HTTP error! Status: ${relatedResponse.status}`);
-        }
-        const relatedData = await relatedResponse.json();
-        // Filter out the current blog post
-        setRelatedPosts(relatedData.filter((post) => post.id !== data.id));
       } catch (error) {
         console.error("Error fetching blog details:", error);
       } finally {
@@ -54,20 +43,16 @@ const BlogDetails = () => {
     }
   }, [id]);
 
-  const handleRelatedPostClick = (postId) => {
-    navigate(`/blogs/${postId}`);
-  };
+  //   const handleRelatedPostClick = (postId) => {
+  //     navigate(`/blogs/${postId}`);
+  //   };
 
   const goBack = () => {
     navigate(-1);
   };
 
   if (loading) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
-      </div>
-    );
+    return <LoadingSpinner></LoadingSpinner>;
   }
 
   if (!blog) {
@@ -203,44 +188,6 @@ const BlogDetails = () => {
 
         {/* Sidebar */}
         <div className="lg:col-span-1">
-          {/* Related Posts */}
-          {relatedPosts.length > 0 && (
-            <div
-              className={`p-6 rounded-xl mb-8 ${
-                theme === "dark" ? "bg-gray-800" : "bg-gray-100"
-              }`}
-            >
-              <h3 className="text-xl font-bold mb-4">Related Posts</h3>
-              <div className="space-y-4">
-                {relatedPosts.map((post) => (
-                  <div
-                    key={post.id}
-                    className="flex gap-3 cursor-pointer hover:opacity-80 transition-opacity"
-                    onClick={() => handleRelatedPostClick(post.id)}
-                  >
-                    <img
-                      src={post.image}
-                      alt={post.title}
-                      className="w-24 h-16 object-cover rounded"
-                    />
-                    <div>
-                      <h4 className="font-medium text-sm leading-tight">
-                        {post.title}
-                      </h4>
-                      <p
-                        className={`text-xs mt-1 ${
-                          theme === "dark" ? "text-gray-400" : "text-gray-500"
-                        }`}
-                      >
-                        {post.date}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
           {/* Newsletter Subscription */}
           <div
             className={`p-6 rounded-xl ${
