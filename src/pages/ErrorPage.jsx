@@ -45,11 +45,10 @@ const ErrorPage = () => {
         </p>
         {/* Navigate To Home Button */}
         <Link
-          to="/"
-          onClick={() => navigate("/")}
+          onClick={() => navigate(-1)}
           className="border border-red-400 text-black font-bold px-8 py-3 rounded-3xl hover:bg-red-600 hover:text-white hover:border-red-600 cursor-pointer duration-300 transition-all"
         >
-          Go Home
+          Go Back
         </Link>
       </div>
     </div>

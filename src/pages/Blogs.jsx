@@ -67,7 +67,7 @@ const Blogs = () => {
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold mb-4">
           <span className={`${theme === "dark" ? "text-white" : "text-black"}`}>
-            Cinema
+            Movie
           </span>
           <span className="bg-red-600 rounded-sm p-1 text-white">Insights</span>
         </h1>
@@ -76,7 +76,7 @@ const Blogs = () => {
             theme === "dark" ? "text-gray-300" : "text-gray-600"
           }`}
         >
-          Dive into the world of cinema with expert reviews, industry news,
+          Dive into the world of movie with expert reviews, industry news,
           exclusive interviews, and behind-the-scenes content from your favorite
           movies.
         </p>

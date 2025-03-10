@@ -5,6 +5,7 @@ import { Rating } from "react-simple-star-rating";
 // import { toast } from "react-hot-toast";
 import LoadingSpinner from "../components/LoadingSpinner";
 import { AuthContext } from "../provider/AuthProvider";
+import { ThemeContext } from "../provider/ThemeProvider";
 
 const currentYear = new Date().getFullYear();
 const years = Array.from({ length: 100 }, (_, i) => currentYear - i);
@@ -33,7 +34,9 @@ const genres = [
 
 const UpdateMovie = () => {
   const { id } = useParams();
-  const { user } = useContext(AuthContext)
+  const { user } = useContext(AuthContext);
+
+  const { theme } = useContext(ThemeContext);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [fetchingMovie, setFetchingMovie] = useState(true);
@@ -46,88 +49,82 @@ const UpdateMovie = () => {
     reset,
   } = useForm();
 
-useEffect(() => {
-  const fetchMovie = async () => {
+  useEffect(() => {
+    const fetchMovie = async () => {
+      try {
+        setFetchingMovie(true);
+        const response = await fetch(`http://localhost:5000/movies/${id}`);
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch movie data");
+        }
+
+        const movie = await response.json();
+
+        // Reset form with movie data
+        reset({
+          poster: movie.Movie_Poster,
+          title: movie.Movie_Title,
+          genre: movie.Genre,
+          duration: movie.Duration,
+          releaseYear: movie.Release_Year,
+          rating: movie.Rating,
+          summary: movie.Summary,
+        });
+      } catch (error) {
+        console.error("Error fetching movie:", error);
+        //   toast.error("Failed to load movie data");
+        navigate(-1);
+      } finally {
+        setFetchingMovie(false);
+      }
+    };
+
+    fetchMovie();
+  }, [id, reset, navigate]);
+
+  const onSubmit = async (data) => {
+    if (data.rating === 0) {
+      // toast.error("Please select a rating");
+      return;
+    }
+
     try {
-      setFetchingMovie(true);
+      setLoading(true);
+
+
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/movies/${id}`
+        `${import.meta.env.VITE_API_URL}/movies/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
       );
 
       if (!response.ok) {
-        throw new Error("Failed to fetch movie data");
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to update movie");
       }
 
-      const movie = await response.json();
-
-      // Reset form with movie data
-      reset({
-        poster: movie.poster,
-        title: movie.title,
-        genre: movie.genre,
-        duration: movie.duration,
-        releaseYear: movie.releaseYear,
-        rating: movie.rating,
-        summary: movie.summary,
-      });
+      // toast.success("Movie updated successfully!");
+      navigate(`/movie/${id}`);
     } catch (error) {
-      console.error("Error fetching movie:", error);
-    //   toast.error("Failed to load movie data");
-      navigate("/movies");
+      console.error("Error updating movie:", error);
+      // toast.error(error.message);
     } finally {
-      setFetchingMovie(false);
+      setLoading(false);
     }
   };
-
-  fetchMovie();
-}, [id, reset, navigate]);
-
-
-const onSubmit = async (data) => {
-  if (data.rating === 0) {
-    // toast.error("Please select a rating");
-    return;
-  }
-
-  try {
-    setLoading(true);
-
-    const token = await user.getIdToken();
-
-    const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/movies/${id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(data),
-      }
-    );
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || "Failed to update movie");
-    }
-
-    // toast.success("Movie updated successfully!");
-    navigate(`/movie/${id}`);
-  } catch (error) {
-    console.error("Error updating movie:", error);
-    // toast.error(error.message);
-  } finally {
-    setLoading(false);
-  }
-};
-
 
   const validateUrl = (value) => {
     try {
       new URL(value);
       return true;
     } catch (e) {
-        console.log(e);
+      console.log(e);
       return false;
     }
   };
@@ -138,27 +135,41 @@ const onSubmit = async (data) => {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-3xl">
-      <h1 className="text-3xl font-bold mb-8 text-center text-gray-900 dark:text-white">
-        Update Movie
-      </h1>
-
+      <div className="text-center mb-12">
+        <h1 className="text-4xl font-bold mb-4">
+          <span className={`${theme === "dark" ? "text-white" : "text-black"}`}>
+            Update
+          </span>
+          <span className="bg-red-600 rounded-sm p-1 text-white">Movie</span>
+        </h1>
+        <p
+          className={`text-lg max-w-3xl mx-auto ${
+            theme === "dark" ? "text-gray-300" : "text-gray-600"
+          }`}
+        >
+          Keep your favorite movies up to date! Edit details, refresh
+          information, and make sure others get the best recommendations.
+        </p>
+      </div>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md"
+        className="p-6 rounded-lg shadow-md"
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Movie Poster */}
           <div className="md:col-span-2">
-            <label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
-              Movie Poster URL
+            <label
+              className={`block font-medium mb-2  ${
+                theme === "dark" ? "text-gray-300" : "text-gray-800"
+              }`}
+            >
+              Movie Poster URL<span className="text-red-500">*</span>
             </label>
             <input
               type="text"
-              className={`w-full px-4 py-2 rounded border ${
-                errors.poster
-                  ? "border-red-500"
-                  : "border-gray-300 dark:border-gray-600"
-              } focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white`}
+              className={`w-full px-4 py-2 rounded border border-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 ${
+                theme === "dark" ? "text-gray-300" : "bg-[#e8effe]"
+              }`}
               placeholder="https://example.com/image.jpg"
               {...register("poster", {
                 required: "Poster URL is required",
@@ -177,16 +188,18 @@ const onSubmit = async (data) => {
 
           {/* Movie Title */}
           <div className="md:col-span-2">
-            <label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
-              Movie Title
+            <label
+              className={`block font-medium mb-2  ${
+                theme === "dark" ? "text-gray-300" : "text-gray-800"
+              }`}
+            >
+              Movie Title <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
-              className={`w-full px-4 py-2 rounded border ${
-                errors.title
-                  ? "border-red-500"
-                  : "border-gray-300 dark:border-gray-600"
-              } focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white`}
+              className={`w-full px-4 py-2 rounded border border-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 ${
+                theme === "dark" ? "text-gray-300" : "bg-[#e8effe]"
+              }`}
               placeholder="Enter movie title"
               {...register("title", {
                 required: "Title is required",
@@ -205,16 +218,18 @@ const onSubmit = async (data) => {
 
           {/* Genre */}
           <div>
-            <label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
-              Genre
+            <label
+              className={`block font-medium mb-2  ${
+                theme === "dark" ? "text-gray-300" : "text-gray-800"
+              }`}
+            >
+              Genre <span className="text-red-500">*</span>
             </label>
             <select
               multiple
-              className={`w-full px-4 py-2 rounded border ${
-                errors.genre
-                  ? "border-red-500"
-                  : "border-gray-300 dark:border-gray-600"
-              } focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white`}
+              className={`w-full px-4 py-2 rounded border border-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 ${
+                theme === "dark" ? "text-gray-300" : "bg-[#e8effe]"
+              }`}
               {...register("genre", {
                 required: "Please select at least one genre",
               })}
@@ -237,16 +252,18 @@ const onSubmit = async (data) => {
 
           {/* Duration */}
           <div>
-            <label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
-              Duration (minutes)
+            <label
+              className={`block font-medium mb-2  ${
+                theme === "dark" ? "text-gray-300" : "text-gray-800"
+              }`}
+            >
+              Duration (minutes) <span className="text-red-500">*</span>
             </label>
             <input
               type="number"
-              className={`w-full px-4 py-2 rounded border ${
-                errors.duration
-                  ? "border-red-500"
-                  : "border-gray-300 dark:border-gray-600"
-              } focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white`}
+              className={`w-full px-4 py-2 rounded border border-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 ${
+                theme === "dark" ? "text-gray-300" : "bg-[#e8effe]"
+              }`}
               placeholder="Enter duration in minutes"
               {...register("duration", {
                 required: "Duration is required",
@@ -266,15 +283,17 @@ const onSubmit = async (data) => {
 
           {/* Release Year */}
           <div>
-            <label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
+            <label
+              className={`block font-medium mb-2  ${
+                theme === "dark" ? "text-gray-300" : "text-gray-800"
+              }`}
+            >
               Release Year
             </label>
             <select
-              className={`w-full px-4 py-2 rounded border ${
-                errors.releaseYear
-                  ? "border-red-500"
-                  : "border-gray-300 dark:border-gray-600"
-              } focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white`}
+              className={`w-full px-4 py-2 rounded border border-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 ${
+                theme === "dark" ? "text-gray-300" : "bg-[#e8effe]"
+              }`}
               {...register("releaseYear", {
                 required: "Release year is required",
                 valueAsNumber: true,
@@ -295,7 +314,11 @@ const onSubmit = async (data) => {
 
           {/* Rating */}
           <div className="md:col-span-2">
-            <label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
+            <label
+              className={`block font-medium mb-2  ${
+                theme === "dark" ? "text-gray-300" : "text-gray-800"
+              }`}
+            >
               Rating
             </label>
             <Controller
@@ -315,16 +338,18 @@ const onSubmit = async (data) => {
 
           {/* Summary */}
           <div className="md:col-span-2">
-            <label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
-              Summary
+            <label
+              className={`block font-medium mb-2  ${
+                theme === "dark" ? "text-gray-300" : "text-gray-800"
+              }`}
+            >
+              Summary <span className="text-red-500">*</span>
             </label>
             <textarea
               rows="4"
-              className={`w-full px-4 py-2 rounded border ${
-                errors.summary
-                  ? "border-red-500"
-                  : "border-gray-300 dark:border-gray-600"
-              } focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white`}
+              className={`w-full px-4 py-2 rounded border border-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 ${
+                theme === "dark" ? "text-gray-300" : "bg-[#e8effe]"
+              }`}
               placeholder="Write a summary of the movie..."
               {...register("summary", {
                 required: "Summary is required",

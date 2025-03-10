@@ -44,7 +44,7 @@ const FeaturedMovies = () => {
             >
               Featured
               <span className="bg-red-600 rounded-sm p-[0.15rem] text-white">
-                Cinema
+                Movie
               </span>
             </h2>
             <Link

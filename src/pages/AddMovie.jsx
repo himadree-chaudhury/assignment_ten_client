@@ -32,7 +32,7 @@ const genres = [
 ];
 
 const AddMovie = () => {
-    const { user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   const { theme } = useContext(ThemeContext);
   const navigate = useNavigate();
@@ -69,12 +69,12 @@ const AddMovie = () => {
         userEmail: user.email,
       };
 
-        const token = await user.getIdToken();
+      const token = await user.getIdToken();
       const response = await fetch(`${import.meta.env.VITE_API_URL}/movies`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(movieData),
       });
@@ -117,7 +117,7 @@ const AddMovie = () => {
             theme === "dark" ? "text-gray-300" : "text-gray-600"
           }`}
         >
-          Share your love for cinema by adding your favorite movies! With a few
+          Share your love for movies by adding your favorite movies! With a few
           simple details, you can bring new films to the spotlight and inspire
           others to discover them.
         </p>
@@ -138,11 +138,9 @@ const AddMovie = () => {
             </label>
             <input
               type="text"
-              className={`w-full px-4 py-2 rounded border ${
-                errors.poster
-                  ? "border-red-500"
-                  : "border-gray-300 dark:border-gray-600"
-              } focus:outline-none focus:ring-2 focus:ring-red-500 dark:bg-gray-700 dark:text-white`}
+              className={`w-full px-4 py-2 rounded border border-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 ${
+                theme === "dark" ? "text-gray-300" : "bg-[#e8effe]"
+              }`}
               placeholder="https://example.com/image.jpg"
               {...register("poster", {
                 required: "Poster URL is required",
@@ -170,11 +168,9 @@ const AddMovie = () => {
             </label>
             <input
               type="text"
-              className={`w-full px-4 py-2 rounded border ${
-                errors.title
-                  ? "border-red-500"
-                  : "border-gray-300 dark:border-gray-600"
-              } focus:outline-none focus:ring-2 focus:ring-red-500 dark:bg-gray-700 dark:text-white`}
+              className={`w-full px-4 py-2 rounded border border-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 ${
+                theme === "dark" ? "text-gray-300" : "bg-[#e8effe]"
+              }`}
               placeholder="Enter movie title"
               {...register("title", {
                 required: "Title is required",
@@ -202,11 +198,9 @@ const AddMovie = () => {
             </label>
             <select
               multiple
-              className={`w-full px-4 py-2 rounded border ${
-                errors.genre
-                  ? "border-red-500"
-                  : "border-gray-300 dark:border-gray-600"
-              } focus:outline-none focus:ring-2 focus:ring-red-500 dark:bg-gray-700 dark:text-white`}
+              className={`w-full px-4 py-2 rounded border border-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 ${
+                theme === "dark" ? "text-gray-300" : "bg-[#e8effe]"
+              }`}
               {...register("genre", {
                 required: "Please select at least one genre",
               })}
@@ -238,11 +232,9 @@ const AddMovie = () => {
             </label>
             <input
               type="number"
-              className={`w-full px-4 py-2 rounded border ${
-                errors.duration
-                  ? "border-red-500"
-                  : "border-gray-300 dark:border-gray-600"
-              } focus:outline-none focus:ring-2 focus:ring-red-500 dark:bg-gray-700 dark:text-white`}
+              className={`w-full px-4 py-2 rounded border border-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 ${
+                theme === "dark" ? "text-gray-300" : "bg-[#e8effe]"
+              }`}
               placeholder="Enter duration in minutes"
               {...register("duration", {
                 required: "Duration is required",
@@ -270,11 +262,9 @@ const AddMovie = () => {
               Release Year
             </label>
             <select
-              className={`w-full px-4 py-2 rounded border ${
-                errors.releaseYear
-                  ? "border-red-500"
-                  : "border-gray-300 dark:border-gray-600"
-              } focus:outline-none focus:ring-2 focus:ring-red-500 dark:bg-gray-700 dark:text-white`}
+              className={`w-full px-4 py-2 rounded border border-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 ${
+                theme === "dark" ? "text-gray-300" : "bg-[#e8effe]"
+              }`}
               {...register("releaseYear", {
                 required: "Release year is required",
                 valueAsNumber: true,
@@ -328,11 +318,9 @@ const AddMovie = () => {
             </label>
             <textarea
               rows="4"
-              className={`w-full px-4 py-2 rounded border ${
-                errors.summary
-                  ? "border-red-500"
-                  : "border-gray-300 dark:border-gray-600"
-              } focus:outline-none focus:ring-2 focus:ring-red-500 dark:bg-gray-700 dark:text-white`}
+              className={`w-full px-4 py-2 rounded border border-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 ${
+                theme === "dark" ? "text-gray-300" : "bg-[#e8effe]"
+              }`}
               placeholder="Write a summary of the movie..."
               {...register("summary", {
                 required: "Summary is required",

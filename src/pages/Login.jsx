@@ -1,16 +1,16 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaGoogle } from "react-icons/fa";
 // import toast from "react-hot-toast";
-import { AuthContext } from '../provider/AuthProvider';
-import { ThemeContext } from '../provider/ThemeProvider';
+import { AuthContext } from "../provider/AuthProvider";
+import { ThemeContext } from "../provider/ThemeProvider";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-    const { signIn, signInWithGoogle } = useContext(AuthContext);
-    
-  const { theme} = useContext(ThemeContext);
+  const { signIn, signInWithGoogle } = useContext(AuthContext);
+
+  const { theme } = useContext(ThemeContext);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -21,20 +21,20 @@ const Login = () => {
 
     try {
       await signIn(email, password);
-    //   toast.success("Login successful!");
+      //   toast.success("Login successful!");
       navigate(from, { replace: true });
     } catch (error) {
-    //   toast.error(error.message);
+      //   toast.error(error.message);
     }
   };
 
   const handleSignInWithGoogle = async () => {
     try {
       await signInWithGoogle();
-    //   toast.success("Login successful!");
+      //   toast.success("Login successful!");
       navigate(from, { replace: true });
     } catch (error) {
-    //   toast.error(error.message);
+      //   toast.error(error.message);
     }
   };
 
@@ -64,7 +64,9 @@ const Login = () => {
             <input
               type="email"
               id="email"
-              className="w-full px-3 py-2 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 dark:bg-gray-700 dark:text-white"
+              className={`w-full px-4 py-2 rounded border border-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 ${
+                theme === "dark" ? "text-gray-300" : "bg-[#e8effe]"
+              }`}
               placeholder="your@email.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -83,7 +85,9 @@ const Login = () => {
             <input
               type="password"
               id="password"
-              className="w-full px-3 py-2 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 dark:bg-gray-700 dark:text-white"
+              className={`w-full px-4 py-2 rounded border border-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 ${
+                theme === "dark" ? "text-gray-300" : "bg-[#e8effe]"
+              }`}
               placeholder="******"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
