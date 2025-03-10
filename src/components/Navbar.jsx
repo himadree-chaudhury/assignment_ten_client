@@ -69,7 +69,7 @@ const Navbar = () => {
               >
                 My Favorites
               </NavLink>
-              <NavLink to="/blog" style={navLinkStyles} className="py-2">
+              <NavLink to="/blogs" style={navLinkStyles} className="py-2">
                 Spotlight
               </NavLink>
             </div>
@@ -204,7 +204,7 @@ const Navbar = () => {
                 My Favorites
               </NavLink>
               <NavLink
-                to="/blog"
+                to="/blogs"
                 className="py-2 px-3 rounded hover:bg-opacity-10 hover:bg-black hover:text-white"
                 onClick={() => setIsMenuOpen(false)}
               >

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FaCalendarAlt, FaUser, FaTag } from "react-icons/fa";
 import { ThemeContext } from "../provider/ThemeProvider";
 
@@ -9,7 +9,6 @@ const Blogs = () => {
     const [currentCategory, setCurrentCategory] = useState("All");
     
   const { theme} = useContext(ThemeContext);
-  const navigate = useNavigate();
 
   const categories = [
     "All",
@@ -19,7 +18,6 @@ const Blogs = () => {
     "Behind The Scenes",
   ];
 
-  // Sample blog data - in a real implementation, this would come from your API
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
@@ -49,10 +47,10 @@ const Blogs = () => {
     setCurrentCategory(category);
   };
 
-  const handleBlogClick = (id) => {
-    // In a real implementation, this would navigate to a detailed blog page
-    navigate(`/blog/${id}`);
-  };
+  // const handleBlogClick = (id) => {
+  //   // In a real implementation, this would navigate to a detailed blog page
+  //   navigate(`/blogs/${id}`);
+  // };
 
   if (loading) {
     return (
@@ -91,7 +89,7 @@ const Blogs = () => {
             className={`px-4 py-2 rounded-full transition-colors cursor-pointer ${
               currentCategory === category
                 ? "bg-red-600 text-white"
-                : "bg-gray-200 text-gray-800 hover:bg-gray-300"
+                : "bg-gray-700 text-white hover:bg-gray-800"
             }`}
           >
             {category}
@@ -122,12 +120,12 @@ const Blogs = () => {
                 <FaCalendarAlt className="mr-2" /> {filteredBlogs[0].date}
               </span>
             </div>
-            <button
-              onClick={() => handleBlogClick(filteredBlogs[0].id)}
+            <Link
+              to={`/blogs/${filteredBlogs[0]?._id}`}
               className="bg-red-600 hover:bg-red-700 text-white font-medium px-5 py-2 rounded-lg mt-6 self-start transition-colors cursor-pointer"
             >
               Read More
-            </button>
+            </Link>
           </div>
         </div>
       )}
@@ -137,20 +135,20 @@ const Blogs = () => {
         {filteredBlogs.slice(1).map((blog) => (
           <div
             key={blog.id}
-            className="bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
+            className="bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow flex flex-col h-full"
           >
             <div
               className="h-48 bg-cover bg-center"
               style={{ backgroundImage: `url(${blog.image})` }}
             ></div>
-            <div className="p-6">
-              <span className="bg-gray-700 text-gray-200 text-xs font-medium px-2.5 py-0.5 rounded-full">
+            <div className="p-6 flex flex-col flex-grow">
+              <span className="bg-gray-700 w-fit text-gray-200 text-xs font-medium px-2.5 py-0.5 rounded-full">
                 {blog.category}
               </span>
               <h3 className="text-xl font-bold mt-2 mb-3 text-white">
                 {blog.title}
               </h3>
-              <p className="text-gray-400 mb-4">{blog.excerpt}</p>
+              <p className="text-gray-400 mb-4 grow">{blog.excerpt}</p>
               <div className="flex justify-between text-sm text-gray-500 mb-4">
                 <span className="flex items-center">
                   <FaUser className="mr-1" /> {blog.author}
@@ -159,12 +157,12 @@ const Blogs = () => {
                   <FaCalendarAlt className="mr-1" /> {blog.date}
                 </span>
               </div>
-              <button
-                onClick={() => handleBlogClick(blog.id)}
-                className="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2 rounded transition-colors cursor-pointer"
+              <Link
+                to={`/blogs/${blog?._id}`}
+                className="w-full bg-red-600 hover:bg-red-700 text-white text-center font-medium py-2 rounded transition-colors cursor-pointer mt-auto"
               >
                 Read Article
-              </button>
+              </Link>
             </div>
           </div>
         ))}

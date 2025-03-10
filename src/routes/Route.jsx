@@ -12,6 +12,7 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import PrivateRoute from "./PrivateRoute";
 import UpdateMovie from "../pages/UpdateMovie";
+import BlogDetails from "../pages/BlogDetails";
 
 const route = createBrowserRouter([
   {
@@ -60,8 +61,12 @@ const route = createBrowserRouter([
         ),
       },
       {
-        path: "/blog",
+        path: "/blogs",
         element: <Blogs></Blogs>,
+      },
+      {
+        path: "/blogs/:id",
+        element: <BlogDetails></BlogDetails>,
       },
       {
         path: "/login",

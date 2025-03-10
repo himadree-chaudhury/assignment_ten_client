@@ -58,7 +58,7 @@ const MovieDetails = () => {
         const response = await fetch(`http://localhost:5000/favorites/${id}`);
         if (!response.ok) throw new Error("Failed to check favorite status");
         const data = await response.json();
-        setIsFavorite(data?.movieId ? true : false);
+        setIsFavorite(data?.movieId && data.User_Email===user.email ? true : false);
       } catch (error) {
         console.error("Error checking favorite status:", error);
       } finally {

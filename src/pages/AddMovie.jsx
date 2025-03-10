@@ -123,7 +123,9 @@ const AddMovie = () => {
       </div>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="p-6 rounded-lg shadow-md"
+        className={`p-6 rounded-lg shadow-md ${
+          theme === "dark" ? "bg-gray-800" : "bg-gray-100"
+        }`}
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Movie Poster */}
@@ -137,8 +139,10 @@ const AddMovie = () => {
             </label>
             <input
               type="text"
-              className={`w-full px-4 py-2 rounded border border-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 ${
-                theme === "dark" ? "text-gray-300" : "bg-[#e8effe]"
+              className={`w-full px-4 py-2 rounded-lg focus:ring-2 focus:ring-red-600 outline-none border border-red-200 focus:border-0 ${
+                theme === "dark"
+                  ? "bg-gray-700 text-white placeholder-gray-400"
+                  : "bg-white text-black"
               }`}
               placeholder="https://example.com/image.jpg"
               {...register("Movie_Poster", {
@@ -167,8 +171,10 @@ const AddMovie = () => {
             </label>
             <input
               type="text"
-              className={`w-full px-4 py-2 rounded border border-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 ${
-                theme === "dark" ? "text-gray-300" : "bg-[#e8effe]"
+              className={`w-full px-4 py-2 rounded-lg focus:ring-2 focus:ring-red-600 outline-none border border-red-200 focus:border-0 ${
+                theme === "dark"
+                  ? "bg-gray-700 text-white placeholder-gray-400"
+                  : "bg-white text-black"
               }`}
               placeholder="Enter movie title"
               {...register("Movie_Title", {
@@ -197,8 +203,10 @@ const AddMovie = () => {
             </label>
             <input
               type="number"
-              className={`w-full px-4 py-2 rounded border border-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 ${
-                theme === "dark" ? "text-gray-300" : "bg-[#e8effe]"
+              className={`w-full px-4 py-2 rounded-lg focus:ring-2 focus:ring-red-600 outline-none border border-red-200 focus:border-0 ${
+                theme === "dark"
+                  ? "bg-gray-700 text-white placeholder-gray-400"
+                  : "bg-white text-black"
               }`}
               placeholder="Enter duration in minutes"
               {...register("Duration", {
@@ -227,8 +235,10 @@ const AddMovie = () => {
               Release Year
             </label>
             <select
-              className={`w-full px-4 py-2 rounded border border-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 ${
-                theme === "dark" ? "text-gray-300" : "bg-[#e8effe]"
+              className={`w-full px-4 py-2 rounded-lg focus:ring-2 focus:ring-red-600 outline-none border border-red-200 focus:border-0 ${
+                theme === "dark"
+                  ? "bg-gray-700 text-white placeholder-gray-400"
+                  : "bg-white text-black"
               }`}
               {...register("Release_Year", {
                 required: "Release year is required",
@@ -259,8 +269,10 @@ const AddMovie = () => {
             </label>
             <select
               multiple
-              className={`w-full px-4 py-2 rounded border border-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 ${
-                theme === "dark" ? "text-gray-300" : "bg-[#e8effe]"
+              className={`w-full px-4 py-2 rounded-lg focus:ring-2 focus:ring-red-600 outline-none border border-red-200 focus:border-0 ${
+                theme === "dark"
+                  ? "bg-gray-700 text-white placeholder-gray-400"
+                  : "bg-white text-black"
               }`}
               {...register("Genre", {
                 required: "Please select at least one genre",
@@ -316,8 +328,10 @@ const AddMovie = () => {
             </label>
             <textarea
               rows="4"
-              className={`w-full px-4 py-2 rounded border border-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 ${
-                theme === "dark" ? "text-gray-300" : "bg-[#e8effe]"
+              className={`w-full px-4 py-2 rounded-lg focus:ring-2 focus:ring-red-600 outline-none border border-red-200 focus:border-0 ${
+                theme === "dark"
+                  ? "bg-gray-700 text-white placeholder-gray-400"
+                  : "bg-white text-black"
               }`}
               placeholder="Write a summary of the movie..."
               {...register("Summary", {

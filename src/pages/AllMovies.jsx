@@ -108,7 +108,7 @@ const AllMovies = () => {
                 className={`px-4 py-2 rounded-full text-sm cursor-pointer ${
                   (genre === "All" && !selectedGenre) || selectedGenre === genre
                     ? "bg-red-600 text-white"
-                    : "bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200"
+                    : "bg-gray-700 text-white hover:bg-gray-800"
                 }`}
               >
                 {genre}

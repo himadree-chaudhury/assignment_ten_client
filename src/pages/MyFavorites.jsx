@@ -123,7 +123,7 @@ const MyFavorites = () => {
                 </div>
                 <div className="flex space-x-2">
                   <Link
-                    to={`/movie/${movie?._id}`}
+                    to={`/all-movies/${movie?.movieId}`}
                     className="flex-1 bg-red-600 text-white text-center py-2 rounded hover:bg-red-700 transition duration-300"
                   >
                     See Details
