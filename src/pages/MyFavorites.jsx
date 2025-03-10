@@ -2,62 +2,48 @@ import React, { useState, useEffect, useContext } from "react";
 // import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { FaStar, FaTrash } from "react-icons/fa";
-// import { useAuth } from "../contexts/AuthContext";
 import LoadingSpinner from "../components/LoadingSpinner";
 import { ThemeContext } from "../provider/ThemeProvider";
+import { AuthContext } from "../provider/AuthProvider";
 
 const MyFavorites = () => {
-  //   const { currentUser } = useAuth();
+  const { user } = useContext(AuthContext);
   const { theme } = useContext(ThemeContext);
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  //   useEffect(() => {
-  //     const fetchFavorites = async () => {
-  //       try {
-  //         setLoading(true);
-  //         // const token = await currentUser.getIdToken();
-  //         const response = await fetch(
-  //           `${import.meta.env.VITE_API_URL}/favorites`,
-  //           {
-  //             method: "GET",
-  //             headers: {
-  //             //   Authorization: `Bearer ${token}`,
-  //             },
-  //           }
-  //         );
-  //         if (!response.ok) {
-  //           throw new Error("Failed to load favorites");
-  //         }
-  //         const data = await response.json();
-  //         setFavorites(data);
-  //       } catch (error) {
-  //         console.error("Error fetching favorites:", error);
-  //         // toast.error("Failed to load favorites");
-  //       } finally {
-  //         setLoading(false);
-  //       }
-  //     };
+  useEffect(() => {
+    const fetchFavorites = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(`http://localhost:5000/favorites`);
+        if (!response.ok) throw new Error("Failed to load favorites");
+        const data = await response.json();
+        setFavorites(data);
+        console.log(data);
+      } catch (error) {
+        console.error("Error fetching favorites:", error);
+        // toast.error("Failed to load favorites");
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  //     fetchFavorites();
-  //   }, [currentUser]);
+    fetchFavorites();
+  }, [user]);
 
   const handleRemoveFavorite = async (movieId) => {
     try {
-      //   const token = await currentUser.getIdToken();
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/favorites/${movieId}`,
+        `http://localhost:5000/favorites/${movieId}`,
         {
           method: "DELETE",
-          headers: {
-            // Authorization: `Bearer ${token}`,
-          },
         }
       );
       if (!response.ok) {
         throw new Error("Failed to remove from favorites");
       }
-      setFavorites(favorites.filter((fav) => fav.movie._id !== movieId));
+      setFavorites(favorites.filter((movie) => movie.movieId !== movieId));
       //   toast.success("Removed from favorites");
     } catch (error) {
       console.error("Error removing favorite:", error);
@@ -65,9 +51,9 @@ const MyFavorites = () => {
     }
   };
 
-  //   if (loading) {
-  //     return <LoadingSpinner />;
-  //   }
+  if (loading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -105,42 +91,42 @@ const MyFavorites = () => {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {favorites.map(({ movie }) => (
+          {favorites.map((movie) => (
             <div
-              key={movie._id}
+              key={movie?._id}
               className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:shadow-xl"
             >
               <div className="relative h-64 overflow-hidden">
                 <img
-                  src={movie.poster}
-                  alt={movie.title}
-                  className="w-full h-full object-cover"
+                  src={movie?.Movie_Poster}
+                  alt={movie?.Movie_Title}
+                  className="w-full h-full object-cover object-top"
                 />
                 <div className="absolute top-2 right-2 bg-yellow-500 text-black font-bold px-2 py-1 rounded flex items-center">
-                  <FaStar className="mr-1" /> {movie.rating.toFixed(1)}
+                  <FaStar className="mr-1" /> {movie?.Rating}
                 </div>
               </div>
               <div className="p-4">
                 <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white truncate">
-                  {movie.title}
+                  {movie?.Movie_Title}
                 </h3>
                 <div className="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                  {movie.genre.join(", ")}
+                  {movie?.Genre.join(", ")}
                 </div>
                 <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-3">
-                  <span>{movie.releaseYear}</span>
-                  <span>{movie.duration} min</span>
+                  <span>{movie?.Release_Year}</span>
+                  <span>{movie?.Duration} min</span>
                 </div>
                 <div className="flex space-x-2">
                   <Link
-                    to={`/movie/${movie._id}`}
+                    to={`/movie/${movie?._id}`}
                     className="flex-1 bg-red-600 text-white text-center py-2 rounded hover:bg-red-700 transition duration-300"
                   >
                     See Details
                   </Link>
                   <button
-                    onClick={() => handleRemoveFavorite(movie._id)}
-                    className="flex items-center justify-center bg-red-600 text-white px-3 py-2 rounded hover:bg-red-700 transition duration-300"
+                    onClick={() => handleRemoveFavorite(movie.movieId)}
+                    className="flex items-center justify-center bg-red-600 text-white px-3 py-2 rounded hover:bg-red-700 transition duration-300 cursor-pointer"
                   >
                     <FaTrash />
                   </button>

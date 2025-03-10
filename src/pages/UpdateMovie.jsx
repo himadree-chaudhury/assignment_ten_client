@@ -34,7 +34,7 @@ const genres = [
 
 const UpdateMovie = () => {
   const { id } = useParams();
-  const { user } = useContext(AuthContext);
+  // const { user } = useContext(AuthContext);
 
   const { theme } = useContext(ThemeContext);
   const navigate = useNavigate();
@@ -371,7 +371,7 @@ const UpdateMovie = () => {
           <button
             type="submit"
             disabled={loading}
-            className="bg-blue-600 text-white px-6 py-3 rounded font-medium hover:bg-blue-700 transition duration-300 disabled:opacity-70 disabled:cursor-not-allowed"
+            className="bg-red-600 text-white px-6 py-3 rounded font-medium hover:bg-red-700 transition duration-300 disabled:opacity-70 cursor-pointer disabled:cursor-not-allowed"
           >
             {loading ? "Updating..." : "Update Movie"}
           </button>

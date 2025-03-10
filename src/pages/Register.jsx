@@ -50,7 +50,7 @@ const Register = () => {
 
       //   toast.success("Registration successful!");
       navigate("/");
-    } catch (error) {
+    } catch (error) {console.log(error);
       //   toast.error(error.message);
     }
   };
@@ -61,6 +61,7 @@ const Register = () => {
       //   toast.success("Registration successful!");
       navigate("/");
     } catch (error) {
+      console.log(error);
       //   toast.error(error.message);
     }
   };

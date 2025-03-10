@@ -49,12 +49,10 @@ const MovieDetails = () => {
     const checkIfFavorite = async () => {
       try {
         setCheckingFavorite(true);
-        const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/favorites/check/${id}`
-        );
+        const response = await fetch(`http://localhost:5000/favorites/${id}`);
         if (!response.ok) throw new Error("Failed to check favorite status");
         const data = await response.json();
-        setIsFavorite(data.isFavorite);
+        setIsFavorite(data?.movieId ? true : false);
       } catch (error) {
         console.error("Error checking favorite status:", error);
       } finally {
@@ -69,12 +67,9 @@ const MovieDetails = () => {
     if (!confirm("Are you sure you want to delete this movie?")) return;
 
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/movies/${id}`,
-        {
-          method: "DELETE",
-        }
-      );
+      const response = await fetch(`http://localhost:5000/movies/${id}`, {
+        method: "DELETE",
+      });
       if (!response.ok) throw new Error("Failed to delete movie");
       // toast.success("Movie deleted successfully");
       navigate("/movies");
@@ -87,11 +82,20 @@ const MovieDetails = () => {
   const handleFavoriteToggle = async () => {
     try {
       const method = isFavorite ? "DELETE" : "POST";
-      const body = isFavorite ? null : JSON.stringify({ movieId: id });
+      const body = isFavorite
+        ? null
+        : JSON.stringify({
+            movieId: id,
+            Movie_Poster: movie.Movie_Poster,
+            Movie_Title: movie.Movie_Title,
+            Genre: movie.Genre,
+            Duration: movie.Duration,
+            Release_Year: movie.Release_Year,
+            Rating: movie.Rating,
+            Summary: movie.Summary,
+          });
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/favorites${
-          isFavorite ? `/${id}` : ""
-        }`,
+        `http://localhost:5000/favorites${isFavorite ? `/${id}` : ""}`,
         {
           method,
           headers: {
