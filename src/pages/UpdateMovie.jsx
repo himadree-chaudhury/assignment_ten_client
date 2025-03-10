@@ -60,17 +60,17 @@ const UpdateMovie = () => {
         }
 
         const movie = await response.json();
-
-        // Reset form with movie data
-        reset({
-          poster: movie.Movie_Poster,
-          title: movie.Movie_Title,
-          genre: movie.Genre,
-          duration: movie.Duration,
-          releaseYear: movie.Release_Year,
-          rating: movie.Rating,
-          summary: movie.Summary,
-        });
+        
+          // Reset form with movie data
+          reset({
+            Movie_Poster: movie.Movie_Poster,
+            Movie_Title: movie.Movie_Title,
+            Genre: movie.Genre,
+            Duration: movie.Duration,
+            Release_Year: movie.Release_Year,
+            Rating: movie.Rating,
+            Summary: movie.Summary,
+          });
       } catch (error) {
         console.error("Error fetching movie:", error);
         //   toast.error("Failed to load movie data");
@@ -92,17 +92,13 @@ const UpdateMovie = () => {
     try {
       setLoading(true);
 
-
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/movies/${id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      );
+      const response = await fetch(`http://localhost:5000/movies/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -110,7 +106,7 @@ const UpdateMovie = () => {
       }
 
       // toast.success("Movie updated successfully!");
-      navigate(`/movie/${id}`);
+      navigate(`/all-movies`);
     } catch (error) {
       console.error("Error updating movie:", error);
       // toast.error(error.message);
@@ -171,7 +167,7 @@ const UpdateMovie = () => {
                 theme === "dark" ? "text-gray-300" : "bg-[#e8effe]"
               }`}
               placeholder="https://example.com/image.jpg"
-              {...register("poster", {
+              {...register("Movie_Poster", {
                 required: "Poster URL is required",
                 validate: {
                   isUrl: (value) =>
@@ -201,7 +197,7 @@ const UpdateMovie = () => {
                 theme === "dark" ? "text-gray-300" : "bg-[#e8effe]"
               }`}
               placeholder="Enter movie title"
-              {...register("title", {
+              {...register("Movie_Title", {
                 required: "Title is required",
                 minLength: {
                   value: 2,
@@ -230,7 +226,7 @@ const UpdateMovie = () => {
               className={`w-full px-4 py-2 rounded border border-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 ${
                 theme === "dark" ? "text-gray-300" : "bg-[#e8effe]"
               }`}
-              {...register("genre", {
+              {...register("Genre", {
                 required: "Please select at least one genre",
               })}
             >
@@ -265,7 +261,7 @@ const UpdateMovie = () => {
                 theme === "dark" ? "text-gray-300" : "bg-[#e8effe]"
               }`}
               placeholder="Enter duration in minutes"
-              {...register("duration", {
+              {...register("Duration", {
                 required: "Duration is required",
                 min: {
                   value: 60,
@@ -294,7 +290,7 @@ const UpdateMovie = () => {
               className={`w-full px-4 py-2 rounded border border-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 ${
                 theme === "dark" ? "text-gray-300" : "bg-[#e8effe]"
               }`}
-              {...register("releaseYear", {
+              {...register("Release_Year", {
                 required: "Release year is required",
                 valueAsNumber: true,
               })}
@@ -322,7 +318,7 @@ const UpdateMovie = () => {
               Rating
             </label>
             <Controller
-              name="rating"
+              name="Rating"
               control={control}
               rules={{ required: true }}
               render={({ field }) => (
@@ -351,7 +347,7 @@ const UpdateMovie = () => {
                 theme === "dark" ? "text-gray-300" : "bg-[#e8effe]"
               }`}
               placeholder="Write a summary of the movie..."
-              {...register("summary", {
+              {...register("Summary", {
                 required: "Summary is required",
                 minLength: {
                   value: 10,

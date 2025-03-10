@@ -4,10 +4,11 @@ import { useForm, Controller } from "react-hook-form";
 import { Rating } from "react-simple-star-rating";
 import { ThemeContext } from "../provider/ThemeProvider";
 import { AuthContext } from "../provider/AuthProvider";
+import Test from "../components/Test";
 // import { toast } from "react-hot-toast";
 
 const currentYear = new Date().getFullYear();
-const years = Array.from({ length: 100 }, (_, i) => currentYear - i);
+const years = Array.from({ length: 150 }, (_, i) => currentYear - i);
 const genres = [
   "Action",
   "Adventure",
@@ -21,7 +22,7 @@ const genres = [
   "Fantasy",
   "History",
   "Horror",
-  "Music",
+  "Musical",
   "Mystery",
   "Romance",
   "Sci-Fi",
@@ -33,7 +34,6 @@ const genres = [
 
 const AddMovie = () => {
   const { user } = useContext(AuthContext);
-
   const { theme } = useContext(ThemeContext);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -45,18 +45,18 @@ const AddMovie = () => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      poster: "",
-      title: "",
-      genre: [],
-      duration: "",
-      releaseYear: currentYear,
-      rating: 0,
-      summary: "",
+      Movie_Poster: "",
+      Movie_Title: "",
+      Genre: [],
+      Duration: "",
+      Release_Year: currentYear,
+      Rating: 0,
+      Summary: "",
     },
   });
 
   const onSubmit = async (data) => {
-    if (data.rating === 0) {
+    if (data.Rating === 0) {
       //   toast.error("Please select a rating");
       return;
     }
@@ -66,15 +66,13 @@ const AddMovie = () => {
 
       const movieData = {
         ...data,
-        userEmail: user.email,
+        User_Email: user.email,
       };
 
-      const token = await user.getIdToken();
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/movies`, {
+      const response = await fetch(`http://localhost:5000/movies`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(movieData),
       });
@@ -84,7 +82,7 @@ const AddMovie = () => {
       }
 
       //   toast.success("Movie added successfully!");
-      navigate("/movies");
+      navigate("/all-movies");
     } catch (error) {
       console.error("Error adding movie:", error);
       //   toast.error(error.message || "Failed to add movie");
@@ -105,6 +103,7 @@ const AddMovie = () => {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-3xl">
+      {/* <Test></Test>  */}
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold mb-4">
           <span className={`${theme === "dark" ? "text-white" : "text-black"}`}>
@@ -142,7 +141,7 @@ const AddMovie = () => {
                 theme === "dark" ? "text-gray-300" : "bg-[#e8effe]"
               }`}
               placeholder="https://example.com/image.jpg"
-              {...register("poster", {
+              {...register("Movie_Poster", {
                 required: "Poster URL is required",
                 validate: {
                   isUrl: (value) =>
@@ -150,9 +149,9 @@ const AddMovie = () => {
                 },
               })}
             />
-            {errors.poster && (
+            {errors.Movie_Poster && (
               <span className="text-red-500 text-sm mt-1">
-                {errors.poster.message}
+                {errors.Movie_Poster.message}
               </span>
             )}
           </div>
@@ -172,7 +171,7 @@ const AddMovie = () => {
                 theme === "dark" ? "text-gray-300" : "bg-[#e8effe]"
               }`}
               placeholder="Enter movie title"
-              {...register("title", {
+              {...register("Movie_Title", {
                 required: "Title is required",
                 minLength: {
                   value: 2,
@@ -180,43 +179,9 @@ const AddMovie = () => {
                 },
               })}
             />
-            {errors.title && (
+            {errors.Movie_Title && (
               <span className="text-red-500 text-sm mt-1">
-                {errors.title.message}
-              </span>
-            )}
-          </div>
-
-          {/* Genre */}
-          <div>
-            <label
-              className={`block font-medium mb-2  ${
-                theme === "dark" ? "text-gray-300" : "text-gray-800"
-              }`}
-            >
-              Genre <span className="text-red-500">*</span>
-            </label>
-            <select
-              multiple
-              className={`w-full px-4 py-2 rounded border border-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 ${
-                theme === "dark" ? "text-gray-300" : "bg-[#e8effe]"
-              }`}
-              {...register("genre", {
-                required: "Please select at least one genre",
-              })}
-            >
-              {genres.map((genre) => (
-                <option key={genre} value={genre}>
-                  {genre}
-                </option>
-              ))}
-            </select>
-            <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">
-              Hold Ctrl/Cmd to select multiple genres
-            </p>
-            {errors.genre && (
-              <span className="text-red-500 text-sm mt-1">
-                {errors.genre.message}
+                {errors.Movie_Title.message}
               </span>
             )}
           </div>
@@ -236,7 +201,7 @@ const AddMovie = () => {
                 theme === "dark" ? "text-gray-300" : "bg-[#e8effe]"
               }`}
               placeholder="Enter duration in minutes"
-              {...register("duration", {
+              {...register("Duration", {
                 required: "Duration is required",
                 min: {
                   value: 60,
@@ -245,9 +210,9 @@ const AddMovie = () => {
                 valueAsNumber: true,
               })}
             />
-            {errors.duration && (
+            {errors.Duration && (
               <span className="text-red-500 text-sm mt-1">
-                {errors.duration.message}
+                {errors.Duration.message}
               </span>
             )}
           </div>
@@ -265,7 +230,7 @@ const AddMovie = () => {
               className={`w-full px-4 py-2 rounded border border-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 ${
                 theme === "dark" ? "text-gray-300" : "bg-[#e8effe]"
               }`}
-              {...register("releaseYear", {
+              {...register("Release_Year", {
                 required: "Release year is required",
                 valueAsNumber: true,
               })}
@@ -276,15 +241,48 @@ const AddMovie = () => {
                 </option>
               ))}
             </select>
-            {errors.releaseYear && (
+            {errors.Release_Year && (
               <span className="text-red-500 text-sm mt-1">
-                {errors.releaseYear.message}
+                {errors.Release_Year.message}
               </span>
             )}
           </div>
 
+          {/* Genre */}
+          <div>
+            <label
+              className={`block font-medium mb-2  ${
+                theme === "dark" ? "text-gray-300" : "text-gray-800"
+              }`}
+            >
+              Genre <span className="text-red-500">*</span>
+            </label>
+            <select
+              multiple
+              className={`w-full px-4 py-2 rounded border border-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 ${
+                theme === "dark" ? "text-gray-300" : "bg-[#e8effe]"
+              }`}
+              {...register("Genre", {
+                required: "Please select at least one genre",
+              })}
+            >
+              {genres.map((genre) => (
+                <option key={genre} value={genre}>
+                  {genre}
+                </option>
+              ))}
+            </select>
+            <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">
+              Hold Ctrl/Cmd to select multiple genres
+            </p>
+            {errors.Genre && (
+              <span className="text-red-500 text-sm mt-1">
+                {errors.Genre.message}
+              </span>
+            )}
+          </div>
           {/* Rating */}
-          <div className="md:col-span-2">
+          <div className="">
             <label
               className={`block font-medium mb-2  ${
                 theme === "dark" ? "text-gray-300" : "text-gray-800"
@@ -293,7 +291,7 @@ const AddMovie = () => {
               Rating
             </label>
             <Controller
-              name="rating"
+              name="Rating"
               control={control}
               render={({ field }) => (
                 <Rating
@@ -322,7 +320,7 @@ const AddMovie = () => {
                 theme === "dark" ? "text-gray-300" : "bg-[#e8effe]"
               }`}
               placeholder="Write a summary of the movie..."
-              {...register("summary", {
+              {...register("Summary", {
                 required: "Summary is required",
                 minLength: {
                   value: 10,
@@ -330,9 +328,9 @@ const AddMovie = () => {
                 },
               })}
             />
-            {errors.summary && (
+            {errors.Summary && (
               <span className="text-red-500 text-sm mt-1">
-                {errors.summary.message}
+                {errors.Summary.message}
               </span>
             )}
           </div>

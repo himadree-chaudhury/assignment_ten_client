@@ -23,6 +23,7 @@ const MovieDetails = () => {
   const [loading, setLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
   const [checkingFavorite, setCheckingFavorite] = useState(true);
+  const [movieUser, setMovieUser] = useState(true);
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
@@ -32,6 +33,11 @@ const MovieDetails = () => {
         if (!response.ok) throw new Error("Failed to fetch movie details");
         const data = await response.json();
         setMovie(data);
+        if (
+          data?.User_Email === user.email
+            ? setMovieUser(false)
+            : setMovieUser(true)
+        );
       } catch (error) {
         console.error("Error fetching movie details:", error);
         // toast.error("Failed to load movie details");
@@ -41,7 +47,7 @@ const MovieDetails = () => {
     };
 
     fetchMovieDetails();
-  }, [id]);
+  }, [id,user]);
 
   useEffect(() => {
     if (!user || !movie) return;
@@ -72,7 +78,7 @@ const MovieDetails = () => {
       });
       if (!response.ok) throw new Error("Failed to delete movie");
       // toast.success("Movie deleted successfully");
-      navigate("/movies");
+      navigate("/all-movies");
     } catch (error) {
       console.error("Error deleting movie:", error);
       // toast.error("Failed to delete movie");
@@ -114,6 +120,10 @@ const MovieDetails = () => {
       // toast.error("Failed to update favorites");
     }
   };
+
+  const userActivityAlert = () => {
+    // toast.error("You didn't add this movie. Sorry!")
+  }
 
   if (loading) return <LoadingSpinner />;
   if (!movie)
@@ -203,18 +213,32 @@ const MovieDetails = () => {
                 )}
                 {isFavorite ? "Remove from Favorites" : "Add to Favorites"}
               </Link>
-              <Link
-                onClick={() => navigate(`/update-movie/${id}`)}
-                className="flex items-center px-4 py-2 rounded-lg font-medium bg-blue-700 text-white hover:bg-blue-800 transition-all duration-300 cursor-pointer"
-              >
-                <FaEdit className="mr-2" /> Update Movie
-              </Link>
-              <Link
-                onClick={handleDelete}
-                className="flex items-center px-4 py-2 rounded-lg font-medium bg-red-700 text-white hover:bg-red-800 transition-all duration-300 cursor-pointer"
-              >
-                <FaTrash className="mr-2" /> Delete Movie
-              </Link>
+              {movieUser ? (
+                <Link onClick={userActivityAlert} className="flex items-center px-4 py-2 rounded-lg font-medium bg-blue-700 text-white hover:bg-blue-800 transition-all duration-300 cursor-pointer">
+                  <FaEdit className="mr-2" /> Update Movie
+                </Link>
+              ) : (
+                <Link
+                  onClick={() => navigate(`/update-movie/${id}`)}
+                  className="flex items-center px-4 py-2 rounded-lg font-medium bg-blue-700 text-white hover:bg-blue-800 transition-all duration-300 cursor-pointer"
+                >
+                  <FaEdit className="mr-2" /> Update Movie
+                </Link>
+              )}
+              {movieUser ? (
+                <Link onClick={userActivityAlert}
+                  className="flex items-center px-4 py-2 rounded-lg font-medium bg-red-700 text-white hover:bg-red-800 transition-all duration-300 cursor-pointer"
+                >
+                  <FaTrash className="mr-2" /> Delete Movie
+                </Link>
+              ) : (
+                <Link
+                  onClick={handleDelete}
+                  className="flex items-center px-4 py-2 rounded-lg font-medium bg-red-700 text-white hover:bg-red-800 transition-all duration-300 cursor-pointer"
+                >
+                  <FaTrash className="mr-2" /> Delete Movie
+                </Link>
+              )}
             </div>
           </div>
         </div>

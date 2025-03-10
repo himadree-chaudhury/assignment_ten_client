@@ -147,8 +147,8 @@ const HomeLayout = () => {
                     theme === "dark" ? "dark:text-gray-400" : "text-gray-800"
                   }`}
                 >
-                  Read honest reviews and ratings from other movie enthusiasts
-                  to find your next watch.
+                  Read expert reviews, industry news, exclusive interviews to
+                  find your next watch.
                 </p>
               </div>
             </div>
