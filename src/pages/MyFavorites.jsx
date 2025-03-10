@@ -19,7 +19,11 @@ const MyFavorites = () => {
         const response = await fetch(`http://localhost:5000/favorites`);
         if (!response.ok) throw new Error("Failed to load favorites");
         const data = await response.json();
-        setFavorites(data);
+        setFavorites(
+          data.filter(
+            (movie) => user.email === movie.User_Email
+          )
+        );
         console.log(data);
       } catch (error) {
         console.error("Error fetching favorites:", error);

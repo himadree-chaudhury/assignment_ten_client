@@ -99,6 +99,7 @@ const MovieDetails = () => {
             Release_Year: movie.Release_Year,
             Rating: movie.Rating,
             Summary: movie.Summary,
+            User_Email: user.email,
           });
       const response = await fetch(
         `http://localhost:5000/favorites${isFavorite ? `/${id}` : ""}`,
