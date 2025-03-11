@@ -61,17 +61,6 @@ const AddMovie = () => {
   }, [userRatingValue, setValue]);
 
   const onSubmit = async (data) => {
-    // if (data.Rating === 0) {
-    //   Swal.fire({
-    //     text: "Please select a rating !",
-    //     icon: "info",
-    //     background: theme === "dark" ? "#1a202c" : "#fff",
-    //     color: theme === "dark" ? "#fff" : "#000",
-    //     confirmButtonColor: "#dc2626",
-    //   });
-    //   return;
-    // }
-
     try {
       setLoading(true);
 

@@ -6,6 +6,8 @@ import { toast } from "react-hot-toast";
 import LoadingSpinner from "../components/LoadingSpinner";
 import { ThemeContext } from "../provider/ThemeProvider";
 import Swal from "sweetalert2";
+import { AppContext } from "../provider/ContextProvider";
+import StarComponent from "../components/StarComponent";
 
 const currentYear = new Date().getFullYear();
 const years = Array.from({ length: 100 }, (_, i) => currentYear - i);
@@ -35,6 +37,7 @@ const genres = [
 const UpdateMovie = () => {
   const { id } = useParams();
   const { theme } = useContext(ThemeContext);
+  const { userRatingValue, setUserRatingValue } = useContext(AppContext);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [fetchingMovie, setFetchingMovie] = useState(true);
@@ -42,10 +45,14 @@ const UpdateMovie = () => {
   const {
     register,
     handleSubmit,
-    control,
+    setValue,
     formState: { errors },
     reset,
   } = useForm();
+
+  useEffect(() => {
+    setValue("Rating", userRatingValue);
+  }, [userRatingValue, setValue]);
 
   useEffect(() => {
     const fetchMovie = async () => {
@@ -60,7 +67,7 @@ const UpdateMovie = () => {
         }
 
         const movie = await response.json();
-
+        setUserRatingValue(movie.Rating);
         // Reset form with movie data
         reset({
           Movie_Poster: movie.Movie_Poster,
@@ -84,16 +91,16 @@ const UpdateMovie = () => {
   }, [id, reset, navigate]);
 
   const onSubmit = async (data) => {
-    if (data.rating === 0) {
-      Swal.fire({
-        text: "Please select a rating !",
-        icon: "info",
-        background: theme === "dark" ? "#1a202c" : "#fff",
-        color: theme === "dark" ? "#fff" : "#000",
-        confirmButtonColor: "#dc2626",
-      });
-      return;
-    }
+    // if (data.rating === 0) {
+    //   Swal.fire({
+    //     text: "Please select a rating !",
+    //     icon: "info",
+    //     background: theme === "dark" ? "#1a202c" : "#fff",
+    //     color: theme === "dark" ? "#fff" : "#000",
+    //     confirmButtonColor: "#dc2626",
+    //   });
+    //   return;
+    // }
 
     try {
       setLoading(true);
@@ -346,27 +353,29 @@ const UpdateMovie = () => {
           </div>
 
           {/* Rating */}
-          <div className="md:col-span-2">
+          <div className="">
             <label
               className={`block font-medium mb-2  ${
                 theme === "dark" ? "text-gray-300" : "text-gray-800"
               }`}
             >
-              Rating
+              Rating <span className="text-red-500">*</span>
             </label>
-            <Controller
-              name="Rating"
-              control={control}
-              rules={{ required: true }}
-              render={({ field }) => (
-                <Rating
-                  onClick={(rate) => field.onChange(rate)}
-                  initialValue={field.value}
-                  size={30}
-                  allowFraction
-                />
-              )}
+            {/* Rating Component  */}
+
+            <StarComponent />
+            <input
+              type="hidden"
+              {...register("Rating", {
+                required: "Rating is required",
+                min: { value: 1, message: "Please select a rating" },
+              })}
             />
+            {errors.Rating && (
+              <span className="text-red-500 text-sm mt-1">
+                {errors.Rating.message}
+              </span>
+            )}
           </div>
 
           {/* Summary */}

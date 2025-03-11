@@ -1,11 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AppContext } from "../provider/ContextProvider";
 import { ThemeContext } from "../provider/ThemeProvider";
 
 const StarComponent = () => {
-  const [rating, setRating] = useState(0);
   const [hoverValue, setHoverValue] = useState(0);
-  const { setUserRatingValue } = useContext(AppContext);
+  const { userRatingValue,setUserRatingValue } = useContext(AppContext);
   const { theme} = useContext(ThemeContext);
 
   // We're using 5 stars for a 0-10 scale
@@ -29,17 +28,18 @@ const StarComponent = () => {
     setHoverValue(0);
   };
 
+  useEffect(() => {
+    setUserRatingValue(0);
+  },[setUserRatingValue])
+
   // Handle click event to set rating
   const handleClick = (newValue) => {
     setUserRatingValue(0);
-    setRating(newValue);
     setUserRatingValue(newValue);
-
-    // console.log(userRatingValue,rating);
   };
 
   // Get display rating (hover rating or selected rating)
-  const displayValue = hoverValue || rating;
+  const displayValue = hoverValue || userRatingValue ;
 
   return (
     <section className="md:pt-2">
