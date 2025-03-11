@@ -59,6 +59,7 @@ const MovieDetails = () => {
 
     const checkIfFavorite = async () => {
       try {
+        setLoading(true)
         setCheckingFavorite(true);
         const response = await fetch(
           `https://cinesphere-himadree.vercel.app/favorites/${id}`
@@ -72,6 +73,7 @@ const MovieDetails = () => {
         console.error("Error checking favorite status:", error);
       } finally {
         setCheckingFavorite(false);
+        setLoading(false)
       }
     };
 

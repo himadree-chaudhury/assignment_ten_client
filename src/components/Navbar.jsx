@@ -4,6 +4,7 @@ import { FaSun, FaMoon, FaBars, FaTimes } from "react-icons/fa";
 import logo from "../assets/logo.png";
 import { ThemeContext } from "../provider/ThemeProvider";
 import { AuthContext } from "../provider/AuthProvider";
+import toast from "react-hot-toast";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
@@ -17,10 +18,12 @@ const Navbar = () => {
   const handleLogout = () => {
     logOut()
       .then(() => {
-        // Successfully logged out
+        setIsMenuOpen(false)
+      toast.success("Logout successful!");
       })
       .catch((error) => {
         console.error(error);
+      toast.error("Something went wrong. Try again");
       });
   };
   const navLinkStyles = ({ isActive }) => {
@@ -239,12 +242,14 @@ const Navbar = () => {
                 <div className="flex flex-col text-center space-y-3 border-t pt-3 mt-3">
                   <Link
                     to="/login"
+                    onClick={() => setIsMenuOpen(false)}
                     className={`bg-red-600 text-white px-4 py-2 rounded-md font-bold hover:bg-red-700 transition-all duration-300 cursor-pointer`}
                   >
                     Login
                   </Link>
                   <Link
                     to="/register"
+                    onClick={() => setIsMenuOpen(false)}
                     className={`bg-red-600 text-white px-4 py-2 rounded-md font-bold hover:bg-red-700 transition-all duration-300 cursor-pointer`}
                   >
                     Register

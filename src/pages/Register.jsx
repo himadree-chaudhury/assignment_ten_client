@@ -52,7 +52,7 @@ const Register = () => {
       navigate("/");
     } catch (error) {
       console.log(error);
-      toast.error(error.message);
+      toast.error("Something went wrong. Try again");
     }
   };
 
@@ -63,7 +63,7 @@ const Register = () => {
       navigate("/");
     } catch (error) {
       console.log(error);
-      toast.error(error.message);
+      toast.error("Something went wrong. Try again");
     }
   };
 

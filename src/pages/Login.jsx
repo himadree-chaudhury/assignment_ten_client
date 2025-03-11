@@ -25,7 +25,7 @@ const Login = () => {
       navigate(from, { replace: true });
     } catch (error) {
       console.log(error);
-      toast.error(error.message);
+      toast.error("Invalid email or password");
     }
   };
 
@@ -36,7 +36,7 @@ const Login = () => {
       navigate(from, { replace: true });
     } catch (error) {
       console.log(error);
-      toast.error(error.message);
+      toast.error("Something went wrong. Try again");
     }
   };
 

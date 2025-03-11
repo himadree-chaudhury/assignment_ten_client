@@ -13,6 +13,7 @@ import {
 } from "react-icons/fa";
 import { ThemeContext } from "../provider/ThemeProvider";
 import LoadingSpinner from "../components/LoadingSpinner";
+import toast from "react-hot-toast";
 
 const BlogDetails = () => {
   const [blog, setBlog] = useState(null);
@@ -34,6 +35,7 @@ const BlogDetails = () => {
         setBlog(data);
       } catch (error) {
         console.error("Error fetching blog details:", error);
+        toast.error("Failed to load details");
       } finally {
         setLoading(false);
       }
