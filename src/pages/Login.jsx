@@ -21,27 +21,32 @@ const Login = () => {
 
     try {
       await signIn(email, password);
-        toast.success("Login successful!");
+      toast.success("Login successful!");
       navigate(from, { replace: true });
-    } catch (error) {console.log(error);
-        toast.error(error.message);
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
     }
   };
 
   const handleSignInWithGoogle = async () => {
     try {
       await signInWithGoogle();
-        toast.success("Login successful!");
+      toast.success("Login successful!");
       navigate(from, { replace: true });
     } catch (error) {
       console.log(error);
-        toast.error(error.message);
+      toast.error(error.message);
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <div className=" p-8 rounded-lg shadow-md w-full max-w-md">
+      <div
+        className={`p-8 rounded-lg shadow-md w-full max-w-md ${
+          theme === "dark" ? "bg-gray-800" : "bg-gray-100"
+        }`}
+      >
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold mb-4">
             <span
@@ -65,8 +70,10 @@ const Login = () => {
             <input
               type="email"
               id="email"
-              className={`w-full px-4 py-2 rounded border border-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 ${
-                theme === "dark" ? "text-gray-300" : "bg-[#e8effe]"
+              className={`w-full px-4 py-2 rounded-lg focus:ring-2 focus:ring-red-600 outline-none border border-red-200 focus:border-0 ${
+                theme === "dark"
+                  ? "bg-gray-700 text-white placeholder-gray-400"
+                  : "bg-white text-black"
               }`}
               placeholder="your@email.com"
               value={email}
@@ -86,8 +93,10 @@ const Login = () => {
             <input
               type="password"
               id="password"
-              className={`w-full px-4 py-2 rounded border border-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 ${
-                theme === "dark" ? "text-gray-300" : "bg-[#e8effe]"
+              className={`w-full px-4 py-2 rounded-lg focus:ring-2 focus:ring-red-600 outline-none border border-red-200 focus:border-0 ${
+                theme === "dark"
+                  ? "bg-gray-700 text-white placeholder-gray-400"
+                  : "bg-white text-black"
               }`}
               placeholder="******"
               value={password}

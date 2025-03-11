@@ -52,7 +52,7 @@ const Navbar = () => {
             </Link>
 
             {/* Desktop Menu */}
-            <div className="hidden md:flex items-center space-x-6">
+            <div className="hidden lg:flex items-center space-x-6">
               <NavLink to="/" style={navLinkStyles} className="py-2">
                 Home
               </NavLink>
@@ -75,7 +75,7 @@ const Navbar = () => {
             </div>
 
             {/* User Authentication and Theme Toggle */}
-            <div className="hidden md:flex items-center space-x-4">
+            <div className="hidden lg:flex items-center space-x-4">
               <button
                 onClick={toggleTheme}
                 className={`p-2 rounded-full cursor-pointer ${
@@ -142,7 +142,7 @@ const Navbar = () => {
             </div>
 
             {/* Mobile Menu Button */}
-            <div className="md:hidden flex items-center">
+            <div className="lg:hidden flex items-center">
               <button
                 onClick={toggleTheme}
                 className={`p-2 mr-2 rounded-full cursor-pointer ${
@@ -170,7 +170,7 @@ const Navbar = () => {
 
           {/* Mobile Menu */}
           <div
-            className={`md:hidden ${isMenuOpen ? "block" : "hidden"} ${
+            className={`lg:hidden ${isMenuOpen ? "block" : "hidden"} ${
               theme === "dark" ? "bg-gray-800" : "bg-gray-100"
             } transition-all duration-300 py-4`}
           >

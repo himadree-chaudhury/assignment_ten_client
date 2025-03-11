@@ -75,18 +75,21 @@ const AddMovie = () => {
         User_Email: user.email,
       };
 
-      const response = await fetch(`http://localhost:5000/movies`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(movieData),
-      });
+      const response = await fetch(
+        `https://cinesphere-himadree.vercel.app/movies`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(movieData),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to add movie");
       }
-      
+
       Swal.fire({
         title: "Movie added successfully !",
         icon: "success",

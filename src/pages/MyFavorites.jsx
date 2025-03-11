@@ -16,7 +16,9 @@ const MyFavorites = () => {
     const fetchFavorites = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`http://localhost:5000/favorites`);
+        const response = await fetch(
+          `https://cinesphere-himadree.vercel.app/favorites`
+        );
         if (!response.ok) throw new Error("Failed to load favorites");
         const data = await response.json();
         setFavorites(data.filter((movie) => user.email === movie.User_Email));
@@ -42,7 +44,7 @@ const MyFavorites = () => {
   const handleRemoveFavorite = async (movieId) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/favorites/${movieId}`,
+        `https://cinesphere-himadree.vercel.app/favorites/${movieId}`,
         {
           method: "DELETE",
         }

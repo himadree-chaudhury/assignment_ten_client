@@ -23,7 +23,9 @@ const Blogs = () => {
     const fetchBlogs = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`http://localhost:5000/blogs`);
+        const response = await fetch(
+          `https://cinesphere-himadree.vercel.app/blogs`
+        );
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }

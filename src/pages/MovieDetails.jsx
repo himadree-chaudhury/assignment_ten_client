@@ -24,18 +24,20 @@ const MovieDetails = () => {
   const [loading, setLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
   const [checkingFavorite, setCheckingFavorite] = useState(true);
-  const [deletedMovieName,setDeletedMovieName] = useState("")
+  const [deletedMovieName, setDeletedMovieName] = useState("");
   const [movieUser, setMovieUser] = useState(true);
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`http://localhost:5000/movies/${id}`);
+        const response = await fetch(
+          `https://cinesphere-himadree.vercel.app/movies/${id}`
+        );
         if (!response.ok) throw new Error("Failed to fetch movie details");
         const data = await response.json();
         setMovie(data);
-        setDeletedMovieName(data.Movie_Title)
+        setDeletedMovieName(data.Movie_Title);
         if (
           data?.User_Email === user.email
             ? setMovieUser(false)
@@ -58,7 +60,9 @@ const MovieDetails = () => {
     const checkIfFavorite = async () => {
       try {
         setCheckingFavorite(true);
-        const response = await fetch(`http://localhost:5000/favorites/${id}`);
+        const response = await fetch(
+          `https://cinesphere-himadree.vercel.app/favorites/${id}`
+        );
         if (!response.ok) throw new Error("Failed to check favorite status");
         const data = await response.json();
         setIsFavorite(
@@ -89,9 +93,12 @@ const MovieDetails = () => {
 
     if (result.isConfirmed) {
       try {
-        const response = await fetch(`http://localhost:5000/movies/${id}`, {
-          method: "DELETE",
-        });
+        const response = await fetch(
+          `https://cinesphere-himadree.vercel.app/movies/${id}`,
+          {
+            method: "DELETE",
+          }
+        );
 
         if (!response.ok) throw new Error("Failed to delete movie");
         Swal.fire({
@@ -136,7 +143,9 @@ const MovieDetails = () => {
             User_Email: user.email,
           });
       const response = await fetch(
-        `http://localhost:5000/favorites${isFavorite ? `/${id}` : ""}`,
+        `https://cinesphere-himadree.vercel.app/favorites${
+          isFavorite ? `/${id}` : ""
+        }`,
         {
           method,
           headers: {

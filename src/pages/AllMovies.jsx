@@ -36,7 +36,9 @@ const AllMovies = () => {
     const fetchMovies = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`http://localhost:5000/movies`);
+        const response = await fetch(
+          `https://cinesphere-himadree.vercel.app/movies`
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch movies");
         }
@@ -96,7 +98,7 @@ const AllMovies = () => {
             <input
               type="text"
               placeholder="Search movies..."
-            //   value={searchTerm}
+              //   value={searchTerm}
               onChange={handleSearch}
               className="w-full md:w-80 px-4 py-2 pl-10 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-red-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
             />
@@ -123,7 +125,7 @@ const AllMovies = () => {
       {loading ? (
         <LoadingSpinner />
       ) : filteredMovies.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
           {filteredMovies.map((movie) => (
             <MovieCard key={movie._id} movie={movie} />
           ))}

@@ -4,7 +4,6 @@ import { useForm, Controller } from "react-hook-form";
 import { Rating } from "react-simple-star-rating";
 import { toast } from "react-hot-toast";
 import LoadingSpinner from "../components/LoadingSpinner";
-import { AuthContext } from "../provider/AuthProvider";
 import { ThemeContext } from "../provider/ThemeProvider";
 import Swal from "sweetalert2";
 
@@ -52,7 +51,9 @@ const UpdateMovie = () => {
     const fetchMovie = async () => {
       try {
         setFetchingMovie(true);
-        const response = await fetch(`http://localhost:5000/movies/${id}`);
+        const response = await fetch(
+          `https://cinesphere-himadree.vercel.app/movies/${id}`
+        );
 
         if (!response.ok) {
           throw new Error("Failed to fetch movie data");
@@ -72,7 +73,7 @@ const UpdateMovie = () => {
         });
       } catch (error) {
         console.error("Error fetching movie:", error);
-          toast.error("Failed to load movie data");
+        toast.error("Failed to load movie data");
         navigate(-1);
       } finally {
         setFetchingMovie(false);
@@ -97,13 +98,16 @@ const UpdateMovie = () => {
     try {
       setLoading(true);
 
-      const response = await fetch(`http://localhost:5000/movies/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+      const response = await fetch(
+        `https://cinesphere-himadree.vercel.app/movies/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();

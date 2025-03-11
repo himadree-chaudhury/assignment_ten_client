@@ -7,7 +7,7 @@ import { ThemeContext } from "../provider/ThemeProvider";
 
 const FeaturedMovies = () => {
   const [featuredMovies, setFeaturedMovies] = useState([]);
-  
+
   const { theme } = useContext(ThemeContext);
   const [loading, setLoading] = useState(true);
 
@@ -15,7 +15,9 @@ const FeaturedMovies = () => {
     const fetchFeaturedMovies = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`http://localhost:5000/movies/featured`);
+        const response = await fetch(
+          `https://cinesphere-himadree.vercel.app/movies/featured`
+        );
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -30,7 +32,6 @@ const FeaturedMovies = () => {
 
     fetchFeaturedMovies();
   }, []);
-    
 
   return (
     <section>
