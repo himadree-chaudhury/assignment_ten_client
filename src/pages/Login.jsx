@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaGoogle } from "react-icons/fa";
-// import toast from "react-hot-toast";
+import toast from "react-hot-toast";
 import { AuthContext } from "../provider/AuthProvider";
 import { ThemeContext } from "../provider/ThemeProvider";
 
@@ -21,21 +21,21 @@ const Login = () => {
 
     try {
       await signIn(email, password);
-        // toast.success("Login successful!");
+        toast.success("Login successful!");
       navigate(from, { replace: true });
     } catch (error) {console.log(error);
-        // toast.error(error.message);
+        toast.error(error.message);
     }
   };
 
   const handleSignInWithGoogle = async () => {
     try {
       await signInWithGoogle();
-        // toast.success("Login successful!");
+        toast.success("Login successful!");
       navigate(from, { replace: true });
     } catch (error) {
       console.log(error);
-        // toast.error(error.message);
+        toast.error(error.message);
     }
   };
 

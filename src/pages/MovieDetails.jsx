@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-// import Swal from "sweetalert2";
-// import { toast } from "react-hot-toast";
+import Swal from "sweetalert2";
 import {
   FaStar,
   FaHeart,
@@ -14,6 +13,7 @@ import {
 import { ThemeContext } from "../provider/ThemeProvider";
 import { AuthContext } from "../provider/AuthProvider";
 import LoadingSpinner from "../components/LoadingSpinner";
+import toast from "react-hot-toast";
 
 const MovieDetails = () => {
   const { id } = useParams();
@@ -24,6 +24,7 @@ const MovieDetails = () => {
   const [loading, setLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
   const [checkingFavorite, setCheckingFavorite] = useState(true);
+  const [deletedMovieName,setDeletedMovieName] = useState("")
   const [movieUser, setMovieUser] = useState(true);
 
   useEffect(() => {
@@ -34,6 +35,7 @@ const MovieDetails = () => {
         if (!response.ok) throw new Error("Failed to fetch movie details");
         const data = await response.json();
         setMovie(data);
+        setDeletedMovieName(data.Movie_Title)
         if (
           data?.User_Email === user.email
             ? setMovieUser(false)
@@ -41,7 +43,7 @@ const MovieDetails = () => {
         );
       } catch (error) {
         console.error("Error fetching movie details:", error);
-        // toast.error("Failed to load movie details");
+        toast.error("Failed to load movie details");
       } finally {
         setLoading(false);
       }
@@ -73,18 +75,47 @@ const MovieDetails = () => {
   }, [id, user, movie]);
 
   const handleDelete = async () => {
-    if (!confirm("Are you sure you want to delete this movie?")) return;
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#dc2626",
+      cancelButtonColor: "#1d4ed8",
+      background: theme === "dark" ? "#1a202c" : "#fff",
+      color: theme === "dark" ? "#fff" : "#000",
+      confirmButtonText: "Yes, delete it!",
+    });
 
-    try {
-      const response = await fetch(`http://localhost:5000/movies/${id}`, {
-        method: "DELETE",
-      });
-      if (!response.ok) throw new Error("Failed to delete movie");
-      // toast.success("Movie deleted successfully");
-      navigate("/all-movies");
-    } catch (error) {
-      console.error("Error deleting movie:", error);
-      // toast.error("Failed to delete movie");
+    if (result.isConfirmed) {
+      try {
+        const response = await fetch(`http://localhost:5000/movies/${id}`, {
+          method: "DELETE",
+        });
+
+        if (!response.ok) throw new Error("Failed to delete movie");
+        Swal.fire({
+          title: "Deleted!",
+          text: `${deletedMovieName} has been deleted`,
+          icon: "success",
+          background: theme === "dark" ? "#1a202c" : "#fff",
+          color: theme === "dark" ? "#fff" : "#000",
+          confirmButtonColor: "#dc2626",
+        });
+
+        // Redirect after deletion
+        navigate("/all-movies");
+      } catch (error) {
+        console.error("Error deleting movie:", error);
+        Swal.fire({
+          title: "Error!",
+          text: "Failed to delete movie !",
+          icon: "error",
+          background: theme === "dark" ? "#1a202c" : "#fff",
+          color: theme === "dark" ? "#fff" : "#000",
+          confirmButtonColor: "#dc2626",
+        });
+      }
     }
   };
 
@@ -115,24 +146,58 @@ const MovieDetails = () => {
         }
       );
       if (!response.ok) throw new Error("Failed to update favorites");
-        
-        // Swal.fire({
-        //   title: "Drag me!",
-        //   icon: "success",
-        // });
 
       setIsFavorite(!isFavorite);
-      // toast.success(
-      //   isFavorite ? "Removed from favorites" : "Added to favorites"
-      // );
+      if (isFavorite === false) {
+        Swal.fire({
+          title: "Added to favorites !",
+          icon: "success",
+          background: theme === "dark" ? "#1a202c" : "#fff",
+          color: theme === "dark" ? "#fff" : "#000",
+          confirmButtonColor: "#dc2626",
+        });
+      } else {
+        Swal.fire({
+          title: "Removed from favorites !",
+          icon: "success",
+          background: theme === "dark" ? "#1a202c" : "#fff",
+          color: theme === "dark" ? "#fff" : "#000",
+          confirmButtonColor: "#dc2626",
+        });
+      }
     } catch (error) {
       console.error("Error toggling favorite:", error);
-      // toast.error("Failed to update favorites");
+      Swal.fire({
+        title: "Error!",
+        text: "Failed to update favorites",
+        icon: "error",
+        background: theme === "dark" ? "#1a202c" : "#fff",
+        color: theme === "dark" ? "#fff" : "#000",
+        confirmButtonColor: "#dc2626",
+      });
     }
   };
 
-  const userActivityAlert = () => {
-    // toast.error("You didn't add this movie. Sorry!")
+  const userActivityAlert = (activity) => {
+    if (activity === "update") {
+      Swal.fire({
+        title: "Sorry!",
+        text: "This movie was added by someone else. You cannot update it",
+        icon: "info",
+        background: theme === "dark" ? "#1a202c" : "#fff",
+        color: theme === "dark" ? "#fff" : "#000",
+        confirmButtonColor: "#dc2626",
+      });
+    } else if (activity === "delete") {
+      Swal.fire({
+        title: "Sorry!",
+        text: "This movie was added by someone else. You cannot delete it",
+        icon: "error",
+        background: theme === "dark" ? "#1a202c" : "#fff",
+        color: theme === "dark" ? "#fff" : "#000",
+        confirmButtonColor: "#dc2626",
+      });
+    }
   };
 
   if (loading) {
@@ -227,7 +292,7 @@ const MovieDetails = () => {
               </Link>
               {movieUser ? (
                 <Link
-                  onClick={userActivityAlert}
+                  onClick={() => userActivityAlert("update")}
                   className="flex items-center px-4 py-2 rounded-lg font-medium bg-blue-700 text-white hover:bg-blue-800 transition-all duration-300 cursor-pointer"
                 >
                   <FaEdit className="mr-2" /> Update Movie
@@ -242,7 +307,7 @@ const MovieDetails = () => {
               )}
               {movieUser ? (
                 <Link
-                  onClick={userActivityAlert}
+                  onClick={() => userActivityAlert("delete")}
                   className="flex items-center px-4 py-2 rounded-lg font-medium bg-red-700 text-white hover:bg-red-800 transition-all duration-300 cursor-pointer"
                 >
                   <FaTrash className="mr-2" /> Delete Movie

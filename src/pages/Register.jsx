@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaGoogle } from "react-icons/fa";
-// import toast from "react-hot-toast";
+import toast from "react-hot-toast";
 import { AuthContext } from "../provider/AuthProvider";
 import { ThemeContext } from "../provider/ThemeProvider";
 
@@ -48,21 +48,21 @@ const Register = () => {
       await createUser(email, password);
       await updateUserProfile(name, photoURL);
 
-        // toast.success("Registration successful!");
+        toast.success("Registration successful!");
       navigate("/");
     } catch (error) {console.log(error);
-        // toast.error(error.message);
+        toast.error(error.message);
     }
   };
 
   const handleSignInWithGoogle = async () => {
     try {
       await signInWithGoogle();
-        // toast.success("Registration successful!");
+        toast.success("Registration successful!");
       navigate("/");
     } catch (error) {
       console.log(error);
-        // toast.error(error.message);
+        toast.error(error.message);
     }
   };
 

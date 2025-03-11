@@ -1,17 +1,17 @@
 import { useState } from "react";
 import { Rating } from "react-simple-star-rating";
-// import Swal from "sweetalert2";
+import Swal from "sweetalert2";
 
 const Test = () => {
   const [rating, setRating] = useState(3);
 
   const handleRating = (rate) => {
       setRating(rate);
-//       Swal.fire({
-//       title: "Drag me!",
-//       icon: "success",
-//       draggable: true,
-//     });
+      Swal.fire({
+      title: "Drag me!",
+      icon: "success",
+      draggable: true,
+    });
   };
 
   return (

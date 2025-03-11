@@ -5,7 +5,7 @@ import { Rating } from "react-simple-star-rating";
 import { ThemeContext } from "../provider/ThemeProvider";
 import { AuthContext } from "../provider/AuthProvider";
 import Test from "../components/Test";
-// import { toast } from "react-hot-toast";
+import Swal from "sweetalert2";
 
 const currentYear = new Date().getFullYear();
 const years = Array.from({ length: 150 }, (_, i) => currentYear - i);
@@ -57,7 +57,13 @@ const AddMovie = () => {
 
   const onSubmit = async (data) => {
     if (data.Rating === 0) {
-        // toast.error("Please select a rating");
+      Swal.fire({
+        text: "Please select a rating !",
+        icon: "info",
+        background: theme === "dark" ? "#1a202c" : "#fff",
+        color: theme === "dark" ? "#fff" : "#000",
+        confirmButtonColor: "#dc2626",
+      });
       return;
     }
 
@@ -80,12 +86,25 @@ const AddMovie = () => {
       if (!response.ok) {
         throw new Error("Failed to add movie");
       }
-
-        // toast.success("Movie added successfully!");
+      
+      Swal.fire({
+        title: "Movie added successfully !",
+        icon: "success",
+        background: theme === "dark" ? "#1a202c" : "#fff",
+        color: theme === "dark" ? "#fff" : "#000",
+        confirmButtonColor: "#dc2626",
+      });
       navigate("/all-movies");
     } catch (error) {
       console.error("Error adding movie:", error);
-        // toast.error(error.message || "Failed to add movie");
+      Swal.fire({
+        title: "Error!",
+        text: "Failed to add movie",
+        icon: "error",
+        background: theme === "dark" ? "#1a202c" : "#fff",
+        color: theme === "dark" ? "#fff" : "#000",
+        confirmButtonColor: "#dc2626",
+      });
     } finally {
       setLoading(false);
     }
@@ -103,7 +122,7 @@ const AddMovie = () => {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-3xl">
-      {/* <Test></Test>  */}
+      <Test></Test>
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold mb-4">
           <span className={`${theme === "dark" ? "text-white" : "text-black"}`}>

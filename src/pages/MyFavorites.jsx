@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
-// import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { FaStar, FaTrash } from "react-icons/fa";
 import LoadingSpinner from "../components/LoadingSpinner";
 import { ThemeContext } from "../provider/ThemeProvider";
 import { AuthContext } from "../provider/AuthProvider";
+import Swal from "sweetalert2";
 
 const MyFavorites = () => {
   const { user } = useContext(AuthContext);
@@ -19,15 +19,18 @@ const MyFavorites = () => {
         const response = await fetch(`http://localhost:5000/favorites`);
         if (!response.ok) throw new Error("Failed to load favorites");
         const data = await response.json();
-        setFavorites(
-          data.filter(
-            (movie) => user.email === movie.User_Email
-          )
-        );
+        setFavorites(data.filter((movie) => user.email === movie.User_Email));
         console.log(data);
       } catch (error) {
         console.error("Error fetching favorites:", error);
-        // toast.error("Failed to load favorites");
+        Swal.fire({
+          title: "Error!",
+          text: "Failed to load favorites",
+          icon: "error",
+          background: theme === "dark" ? "#1a202c" : "#fff",
+          color: theme === "dark" ? "#fff" : "#000",
+          confirmButtonColor: "#dc2626",
+        });
       } finally {
         setLoading(false);
       }
@@ -48,10 +51,23 @@ const MyFavorites = () => {
         throw new Error("Failed to remove from favorites");
       }
       setFavorites(favorites.filter((movie) => movie.movieId !== movieId));
-        // toast.success("Removed from favorites");
+      Swal.fire({
+        title: "Removed from favorites !",
+        icon: "success",
+        background: theme === "dark" ? "#1a202c" : "#fff",
+        color: theme === "dark" ? "#fff" : "#000",
+        confirmButtonColor: "#dc2626",
+      });
     } catch (error) {
       console.error("Error removing favorite:", error);
-        // toast.error("Failed to remove from favorites");
+      Swal.fire({
+        title: "Error!",
+        text: "Failed to remove from favorites",
+        icon: "error",
+        background: theme === "dark" ? "#1a202c" : "#fff",
+        color: theme === "dark" ? "#fff" : "#000",
+        confirmButtonColor: "#dc2626",
+      });
     }
   };
 

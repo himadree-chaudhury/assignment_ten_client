@@ -2,10 +2,11 @@ import React, { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import { Rating } from "react-simple-star-rating";
-// import { toast } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import LoadingSpinner from "../components/LoadingSpinner";
 import { AuthContext } from "../provider/AuthProvider";
 import { ThemeContext } from "../provider/ThemeProvider";
+import Swal from "sweetalert2";
 
 const currentYear = new Date().getFullYear();
 const years = Array.from({ length: 100 }, (_, i) => currentYear - i);
@@ -71,7 +72,7 @@ const UpdateMovie = () => {
         });
       } catch (error) {
         console.error("Error fetching movie:", error);
-          // toast.error("Failed to load movie data");
+          toast.error("Failed to load movie data");
         navigate(-1);
       } finally {
         setFetchingMovie(false);
@@ -83,7 +84,13 @@ const UpdateMovie = () => {
 
   const onSubmit = async (data) => {
     if (data.rating === 0) {
-      // toast.error("Please select a rating");
+      Swal.fire({
+        text: "Please select a rating !",
+        icon: "info",
+        background: theme === "dark" ? "#1a202c" : "#fff",
+        color: theme === "dark" ? "#fff" : "#000",
+        confirmButtonColor: "#dc2626",
+      });
       return;
     }
 
@@ -102,12 +109,24 @@ const UpdateMovie = () => {
         const errorData = await response.json();
         throw new Error(errorData.message || "Failed to update movie");
       }
-
-      // toast.success("Movie updated successfully!");
+      Swal.fire({
+        title: "Movie updated successfully !",
+        icon: "success",
+        background: theme === "dark" ? "#1a202c" : "#fff",
+        color: theme === "dark" ? "#fff" : "#000",
+        confirmButtonColor: "#dc2626",
+      });
       navigate(`/all-movies`);
     } catch (error) {
       console.error("Error updating movie:", error);
-      // toast.error(error.message);
+      Swal.fire({
+        title: "Error!",
+        text: "Failed to update movie",
+        icon: "error",
+        background: theme === "dark" ? "#1a202c" : "#fff",
+        color: theme === "dark" ? "#fff" : "#000",
+        confirmButtonColor: "#dc2626",
+      });
     } finally {
       setLoading(false);
     }
