@@ -1,11 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useForm, Controller } from "react-hook-form";
-import { Rating } from "react-simple-star-rating";
+import { useForm } from "react-hook-form";
 import { ThemeContext } from "../provider/ThemeProvider";
 import { AuthContext } from "../provider/AuthProvider";
-import Test from "../components/Test";
+import StarComponent from "../components/StarComponent";
 import Swal from "sweetalert2";
+import { AppContext } from "../provider/ContextProvider";
 
 const currentYear = new Date().getFullYear();
 const years = Array.from({ length: 150 }, (_, i) => currentYear - i);
@@ -35,13 +35,14 @@ const genres = [
 const AddMovie = () => {
   const { user } = useContext(AuthContext);
   const { theme } = useContext(ThemeContext);
+  const { userRatingValue } = useContext(AppContext);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
   const {
     register,
     handleSubmit,
-    control,
+    setValue,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -54,18 +55,22 @@ const AddMovie = () => {
       Summary: "",
     },
   });
+  // Update the form field when userRatingValue changes
+  useEffect(() => {
+    setValue("Rating", userRatingValue);
+  }, [userRatingValue, setValue]);
 
   const onSubmit = async (data) => {
-    if (data.Rating === 0) {
-      Swal.fire({
-        text: "Please select a rating !",
-        icon: "info",
-        background: theme === "dark" ? "#1a202c" : "#fff",
-        color: theme === "dark" ? "#fff" : "#000",
-        confirmButtonColor: "#dc2626",
-      });
-      return;
-    }
+    // if (data.Rating === 0) {
+    //   Swal.fire({
+    //     text: "Please select a rating !",
+    //     icon: "info",
+    //     background: theme === "dark" ? "#1a202c" : "#fff",
+    //     color: theme === "dark" ? "#fff" : "#000",
+    //     confirmButtonColor: "#dc2626",
+    //   });
+    //   return;
+    // }
 
     try {
       setLoading(true);
@@ -125,7 +130,6 @@ const AddMovie = () => {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-3xl">
-      <Test></Test>
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold mb-4">
           <span className={`${theme === "dark" ? "text-white" : "text-black"}`}>
@@ -306,7 +310,11 @@ const AddMovie = () => {
                 </option>
               ))}
             </select>
-            <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">
+            <p
+              className={`text-sm mt-1 ${
+                theme === "dark" ? "text-gray-400" : "text-gray-600"
+              }`}
+            >
               Hold Ctrl/Cmd to select multiple genres
             </p>
             {errors.Genre && (
@@ -322,21 +330,23 @@ const AddMovie = () => {
                 theme === "dark" ? "text-gray-300" : "text-gray-800"
               }`}
             >
-              Rating
+              Rating <span className="text-red-500">*</span>
             </label>
-            <Controller
-              name="Rating"
-              control={control}
-              render={({ field }) => (
-                <Rating
-                  className="flex"
-                  onClick={(rate) => field.onChange(rate)}
-                  initialValue={field.value}
-                  size={30}
-                  allowFraction
-                />
-              )}
+            {/* Rating Component  */}
+
+            <StarComponent />
+            <input
+              type="hidden"
+              {...register("Rating", {
+                required: "Rating is required",
+                min: { value: 1, message: "Please select a rating" },
+              })}
             />
+            {errors.Rating && (
+              <span className="text-red-500 text-sm mt-1">
+                {errors.Rating.message}
+              </span>
+            )}
           </div>
 
           {/* Summary */}

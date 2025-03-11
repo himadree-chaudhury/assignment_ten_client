@@ -6,13 +6,16 @@ import { RouterProvider } from "react-router-dom";
 import ThemeProvider from "./provider/ThemeProvider";
 import AuthProvider from "./provider/AuthProvider";
 import { Toaster } from "react-hot-toast";
+import { ContextProvider } from "./provider/ContextProvider";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <ThemeProvider>
       <AuthProvider>
-        <RouterProvider router={route}></RouterProvider>
-        <Toaster></Toaster>
+        <ContextProvider>
+          <RouterProvider router={route}></RouterProvider>
+          <Toaster></Toaster>
+        </ContextProvider>
       </AuthProvider>
     </ThemeProvider>
   </StrictMode>

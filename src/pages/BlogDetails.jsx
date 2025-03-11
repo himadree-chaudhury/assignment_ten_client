@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import {
   FaCalendarAlt,
   FaUser,
@@ -19,7 +19,6 @@ const BlogDetails = () => {
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
   const { theme } = useContext(ThemeContext);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchBlogDetails = async () => {
@@ -40,18 +39,9 @@ const BlogDetails = () => {
       }
     };
 
-    if (id) {
-      fetchBlogDetails();
-    }
+    fetchBlogDetails();
   }, [id]);
 
-  //   const handleRelatedPostClick = (postId) => {
-  //     navigate(`/blogs/${postId}`);
-  //   };
-
-  const goBack = () => {
-    navigate(-1);
-  };
 
   if (loading) {
     return <LoadingSpinner></LoadingSpinner>;
@@ -59,18 +49,14 @@ const BlogDetails = () => {
 
   if (!blog) {
     return (
-      <div
-        className={`container mx-auto px-4 py-8 text-center ${
-          theme === "dark" ? "text-white" : "text-black"
-        }`}
-      >
-        <h2 className="text-2xl font-bold">Blog post not found</h2>
-        <button
-          onClick={goBack}
-          className="mt-4 flex items-center mx-auto bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg"
+      <div className="container mx-auto px-4 py-16 text-center">
+        <h2
+          className={`text-2xl font-bold ${
+            theme === "dark" ? "text-gray-400" : "text-gray-600"
+          }`}
         >
-          <FaChevronLeft className="mr-2" /> Go Back
-        </button>
+          Bog post not found
+        </h2>
       </div>
     );
   }
@@ -121,7 +107,7 @@ const BlogDetails = () => {
               theme === "dark" ? "prose-invert" : ""
             }`}
           >
-            <div dangerouslySetInnerHTML={{ __html: blog.content }} />
+            {blog.content}
           </div>
 
           {/* Tags */}
@@ -145,6 +131,9 @@ const BlogDetails = () => {
           <div className="mt-8">
             <h3 className="text-lg font-bold mb-2">Share This Post</h3>
             <div className="flex gap-3">
+              <button className="p-2 bg-blue-700 text-white rounded-full hover:bg-blue-800">
+                <FaShare />
+              </button>
               <button className="p-2 bg-blue-600 text-white rounded-full hover:bg-blue-700">
                 <FaFacebook />
               </button>
@@ -153,6 +142,9 @@ const BlogDetails = () => {
               </button>
               <button className="p-2 bg-blue-700 text-white rounded-full hover:bg-blue-800">
                 <FaLinkedin />
+              </button>
+              <button className="p-2 bg-blue-700 text-white rounded-full hover:bg-blue-800">
+                <FaTag />
               </button>
             </div>
           </div>
@@ -235,7 +227,11 @@ const BlogDetails = () => {
           }`}
         >
           <h4 className="text-xl font-medium mb-4">Leave a Comment</h4>
-          <form>
+          <form
+            onClick={(e) => {
+              e.preventDefault();
+            }}
+          >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
               <input
                 type="text"

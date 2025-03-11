@@ -8,7 +8,6 @@ const Blogs = () => {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentCategory, setCurrentCategory] = useState("All");
-
   const { theme } = useContext(ThemeContext);
 
   const categories = [
@@ -91,7 +90,7 @@ const Blogs = () => {
         ))}
       </div>
 
-      {/* Featured Post */}
+      {/* Featured Blog */}
       {filteredBlogs.length > 0 && (
         <div
           className="mb-12 bg-cover bg-center rounded-xl overflow-hidden relative h-96"
@@ -133,8 +132,7 @@ const Blogs = () => {
           >
             <div
               className="h-48 bg-cover bg-center"
-              style={{ backgroundImage: `url(${blog.image})` }}
-            ></div>
+            ><img src={blog.image} alt={blog.title} /></div>
             <div className="p-6 flex flex-col grow">
               <span className="bg-gray-700 w-fit text-gray-200 text-xs font-medium px-2.5 py-0.5 rounded-full">
                 {blog.category}

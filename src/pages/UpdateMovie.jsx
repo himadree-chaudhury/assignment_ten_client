@@ -265,7 +265,11 @@ const UpdateMovie = () => {
                 </option>
               ))}
             </select>
-            <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">
+            <p
+              className={`text-sm mt-1 ${
+                theme === "dark" ? "text-gray-400" : "text-gray-600"
+              }`}
+            >
               Hold Ctrl/Cmd to select multiple genres
             </p>
             {errors.genre && (

@@ -101,7 +101,11 @@ const MyFavorites = () => {
 
       {favorites.length === 0 ? (
         <div className="text-center py-12">
-          <h3 className="text-xl font-medium mb-4 text-gray-600 dark:text-gray-400">
+          <h3
+            className={`text-xl font-medium mb-4 ${
+              theme === "dark" ? "text-gray-400" : "text-gray-600"
+            }`}
+          >
             You haven't added any favorites yet
           </h3>
           <Link
@@ -116,7 +120,7 @@ const MyFavorites = () => {
           {favorites.map((movie) => (
             <div
               key={movie?._id}
-              className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:shadow-xl"
+              className="bg-gray-800 rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:shadow-xl"
             >
               <div className="relative h-64 overflow-hidden">
                 <img
@@ -129,13 +133,13 @@ const MyFavorites = () => {
                 </div>
               </div>
               <div className="p-4">
-                <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white truncate">
+                <h3 className="text-xl font-bold mb-2 text-white truncate">
                   {movie?.Movie_Title}
                 </h3>
-                <div className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                <div className="text-sm text-gray-400 mb-2">
                   {movie?.Genre.join(", ")}
                 </div>
-                <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-3">
+                <div className="flex justify-between text-sm text-gray-400 mb-3">
                   <span>{movie?.Release_Year}</span>
                   <span>{movie?.Duration} min</span>
                 </div>

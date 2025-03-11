@@ -215,7 +215,11 @@ const MovieDetails = () => {
   if (!movie)
     return (
       <div className="container mx-auto px-4 py-16 text-center">
-        <h2 className="text-2xl font-bold text-gray-800 dark:text-white">
+        <h2
+          className={`text-2xl font-bold ${
+            theme === "dark" ? "text-gray-400" : "text-gray-600"
+          }`}
+        >
           Movie not found
         </h2>
       </div>
@@ -279,7 +283,7 @@ const MovieDetails = () => {
               </h3>
               <p
                 className={`leading-relaxed ${
-                  theme === "dark" ? "text-gray-300" : "text-gray-700"
+                  theme === "dark" ? "text-gray-300" : "text-gray-900"
                 }`}
               >
                 {movie.Summary}

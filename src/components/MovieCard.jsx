@@ -22,17 +22,17 @@ const MovieCard = ({ movie }) => {
           className="w-full h-full object-cover object-top"
         />
         <div className="absolute top-2 right-2 bg-yellow-500 text-black font-bold px-2 py-1 rounded flex items-center">
-          <FaStar className="mr-1" /> {Rating.toFixed(1)}
+          <FaStar className="mr-1" /> {Rating}
         </div>
       </div>
       <div className="p-4">
-        <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white truncate">
+        <h3 className="text-xl font-bold mb-2 text-white truncate">
           {Movie_Title}
         </h3>
-        <div className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+        <div className="text-sm text-gray-400 mb-2">
           {Genre.join(", ")}
         </div>
-        <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-3">
+        <div className="flex justify-between text-sm text-gray-400 mb-3">
           <span>{Release_Year}</span>
           <span>{Duration} min</span>
         </div>

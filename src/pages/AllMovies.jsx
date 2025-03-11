@@ -4,7 +4,6 @@ import MovieCard from "../components/MovieCard";
 import LoadingSpinner from "../components/LoadingSpinner";
 import { FaSearch } from "react-icons/fa";
 import { ThemeContext } from "../provider/ThemeProvider";
-import Test from "../components/Test";
 
 const AllMovies = () => {
   const [movies, setMovies] = useState([]);
@@ -80,7 +79,6 @@ const AllMovies = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <Test></Test>
       <h1
         className={`text-4xl font-bold mb-8 text-center ${
           theme === "dark" ? "text-white" : "text-black"
@@ -100,7 +98,7 @@ const AllMovies = () => {
               placeholder="Search movies..."
               //   value={searchTerm}
               onChange={handleSearch}
-              className="w-full md:w-80 px-4 py-2 pl-10 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-red-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+              className="w-full md:w-80 px-4 py-2 pl-10 rounded-lg border focus:outline-none focus:ring-2 focus:ring-red-700 bg-gray-700 border-gray-600 text-white"
             />
           </div>
 
@@ -132,7 +130,11 @@ const AllMovies = () => {
         </div>
       ) : (
         <div className="text-center py-12">
-          <h3 className="text-xl font-medium text-gray-600 dark:text-gray-400">
+          <h3
+            className={`text-xl font-medium ${
+              theme === "dark" ? "text-gray-400" : "text-gray-600"
+            }`}
+          >
             No movies found matching your search criteria
           </h3>
         </div>

@@ -17,9 +17,9 @@ const HomeLayout = () => {
           <FeaturedMovies></FeaturedMovies>
         </div>
         {/* Extra Section 1: Movie Categories */}
-        <section className="py-12 bg-gray-100 dark:bg-gray-800">
+        <section className="py-12 bg-gray-800">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center mb-10 text-gray-900 dark:text-white">
+            <h2 className="text-3xl font-bold text-center mb-10 text-white">
               Browse
               <span className="bg-red-600 rounded-sm p-[0.15rem] text-white">
                 Category
@@ -56,17 +56,17 @@ const HomeLayout = () => {
                 <Link
                   key={genre}
                   to={`/all-movies?genre=${genre}`}
-                  className="bg-white dark:bg-gray-700 rounded-lg p-6 text-center shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
+                  className="bg-gray-700 rounded-lg p-6 text-center shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
                 >
                   <img
                     src={image}
                     alt={genre}
                     className="w-16 h-16 mx-auto mb-4"
                   />
-                  <div className="font-bold text-lg mb-2 text-gray-900 dark:text-white">
+                  <div className="font-bold text-lg mb-2 text-white">
                     {genre}
                   </div>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                  <p className="text-sm text-gray-400">
                     Explore {genre} movies
                   </p>
                 </Link>
@@ -95,7 +95,7 @@ const HomeLayout = () => {
                 <h3 className="text-xl font-bold mb-2">Huge Collection</h3>
                 <p
                   className={`${
-                    theme === "dark" ? "dark:text-gray-400" : "text-gray-800"
+                    theme === "dark" ? "text-gray-400" : "text-gray-800"
                   }`}
                 >
                   Access thousands of movies across all genres and eras, from
@@ -112,7 +112,7 @@ const HomeLayout = () => {
                 </h3>
                 <p
                   className={`${
-                    theme === "dark" ? "dark:text-gray-400" : "text-gray-800"
+                    theme === "dark" ? "text-gray-400" : "text-gray-800"
                   }`}
                 >
                   Our intuitive design makes it easy to browse, search, and
@@ -129,7 +129,7 @@ const HomeLayout = () => {
                 </h3>
                 <p
                   className={`${
-                    theme === "dark" ? "dark:text-gray-400" : "text-gray-800"
+                    theme === "dark" ? "text-gray-400" : "text-gray-800"
                   }`}
                 >
                   Create your own collection of favorite movies to watch later
@@ -144,7 +144,7 @@ const HomeLayout = () => {
                 <h3 className="text-xl font-bold mb-2">Community Reviews</h3>
                 <p
                   className={`${
-                    theme === "dark" ? "dark:text-gray-400" : "text-gray-800"
+                    theme === "dark" ? "text-gray-400" : "text-gray-800"
                   }`}
                 >
                   Read expert reviews, industry news, exclusive interviews to

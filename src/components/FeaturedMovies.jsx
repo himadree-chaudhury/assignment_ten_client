@@ -50,7 +50,7 @@ const FeaturedMovies = () => {
             </h2>
             <Link
               to="/all-movies"
-              className="text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300 font-medium"
+              className="text-red-400 hover:text-red-500 font-medium"
             >
               View All →
             </Link>
