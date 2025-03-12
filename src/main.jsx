@@ -15,12 +15,13 @@ createRoot(document.getElementById("root")).render(
         <ContextProvider>
           <RouterProvider
             router={route}
-            // !If these features are turned off, an error occurs
+            // !If these features are turned false, an error occurs
             future={{
               v7_startTransition: true,
               v7_relativeSplatPath: true,
             }}
           ></RouterProvider>
+          {/* React Hot Toast container */}
           <Toaster></Toaster>
         </ContextProvider>
       </AuthProvider>

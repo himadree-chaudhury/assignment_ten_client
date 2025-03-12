@@ -11,11 +11,8 @@ import {
 } from "firebase/auth";
 import app from "../firebase/firebase.config";
 
-// Create Authentication Context
 const AuthContext = createContext();
 export {AuthContext};
-
-// Initialize Firebase Authentication
 const auth = getAuth(app);
 
 // Create Google Provider for Google Sign-in
@@ -69,7 +66,6 @@ export const AuthProvider = ({ children }) => {
     return () => unsubscribe();
   }, []);
 
-  // Auth context value object
   const authInfo = {
     user,
     loading,

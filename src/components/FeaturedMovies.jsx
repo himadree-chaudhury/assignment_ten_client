@@ -1,16 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
 import MovieCard from "./MovieCard";
 import LoadingSpinner from "./LoadingSpinner";
 import { ThemeContext } from "../provider/ThemeProvider";
 
 const FeaturedMovies = () => {
   const [featuredMovies, setFeaturedMovies] = useState([]);
-
-  const { theme } = useContext(ThemeContext);
   const [loading, setLoading] = useState(true);
+  const { theme } = useContext(ThemeContext);
 
+  // Fetch featured movies when the component mounts
   useEffect(() => {
     const fetchFeaturedMovies = async () => {
       try {
@@ -29,9 +28,8 @@ const FeaturedMovies = () => {
         setLoading(false);
       }
     };
-
     fetchFeaturedMovies();
-  }, []);
+  }, []); 
 
   return (
     <section>
@@ -48,6 +46,7 @@ const FeaturedMovies = () => {
                 Movie
               </span>
             </h2>
+
             <Link
               to="/all-movies"
               className="text-red-400 hover:text-red-500 font-medium"
@@ -56,9 +55,11 @@ const FeaturedMovies = () => {
             </Link>
           </div>
 
+          {/* Conditional rendering: Show loading spinner while data is being fetched */}
           {loading ? (
             <LoadingSpinner />
           ) : (
+            // Grid layout to display the list of featured movies
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
               {featuredMovies.map((movie) => (
                 <MovieCard key={movie._id} movie={movie} />

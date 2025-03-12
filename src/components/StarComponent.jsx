@@ -11,8 +11,8 @@ const StarComponent = () => {
   const totalStars = 5;
   const maxValue = 10;
 
-  // Create an array of possible rating values (0, 0.2, 0.4, ..., 10)
-  const segments = 50; // 10 segments per star for 0.2 increments
+  // Create an array of possible rating values 
+  const segments = 50; 
   const possibleValues = Array.from(
     { length: segments + 1 },
     (_, i) => (i * maxValue) / segments
@@ -28,6 +28,7 @@ const StarComponent = () => {
     setHoverValue(0);
   };
 
+  // Set the rating value zero on load
   useEffect(() => {
     setUserRatingValue(0);
   },[setUserRatingValue])
@@ -87,7 +88,7 @@ const StarComponent = () => {
                 className="h-full cursor-pointer"
                 style={{
                   width: `${100 / segments}%`,
-                  zIndex: 10, // Ensure this is on top
+                  zIndex: 10,
                 }}
                 onMouseEnter={() => handleMouseOver(value)}
                 onClick={() => handleClick(value)}

@@ -11,69 +11,74 @@ const Register = () => {
   const [photoURL, setPhotoURL] = useState("");
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
-
   const { theme } = useContext(ThemeContext);
   const { createUser, updateUserProfile, signInWithGoogle } =
     useContext(AuthContext);
   const navigate = useNavigate();
 
+  // Validate password 
   const validatePassword = (pass) => {
     if (pass.length < 6) {
-      return "Password must be at least 6 characters long";
+      return "Password must be at least 6 characters long"; 
     }
     if (!/[A-Z]/.test(pass)) {
-      return "Password must contain at least one uppercase letter";
+      return "Password must contain at least one uppercase letter"; 
     }
     if (!/[a-z]/.test(pass)) {
       return "Password must contain at least one lowercase letter";
     }
-    return "";
+    return ""; 
   };
 
+  // Handle password input 
   const handlePasswordChange = (e) => {
     const pass = e.target.value;
     setPassword(pass);
-    setPasswordError(validatePassword(pass));
+    setPasswordError(validatePassword(pass)); 
   };
 
+  // Handle form submission
   const handleRegister = async (e) => {
     e.preventDefault();
 
-    const error = validatePassword(password);
+    const error = validatePassword(password); 
     if (error) {
-      return;
+      return; 
     }
 
     try {
-      await createUser(email, password);
-      await updateUserProfile(name, photoURL);
+      await createUser(email, password); 
+      await updateUserProfile(name, photoURL); 
 
-      toast.success("Registration successful!");
-      navigate("/");
+      toast.success("Registration successful!"); // Show success toast
+      navigate("/"); 
     } catch (error) {
       console.log(error);
-      toast.error("Something went wrong. Try again");
+      toast.error("Something went wrong. Try again"); // Show error toast
     }
   };
 
+  // Handle Google sign-in 
   const handleSignInWithGoogle = async () => {
     try {
       await signInWithGoogle();
-      toast.success("Registration successful!");
-      navigate("/");
+      toast.success("Registration successful!"); // Show success toast
+      navigate("/"); 
     } catch (error) {
-      console.log(error);
-      toast.error("Something went wrong. Try again");
+      console.log(error); 
+      toast.error("Something went wrong. Try again"); // Show error toast
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center ">
+    <div className="min-h-screen flex items-center justify-center">
+      {/* Main Registration Container */}
       <div
         className={`p-8 rounded-lg shadow-md w-full max-w-md ${
           theme === "dark" ? "bg-gray-800" : "bg-gray-100"
         }`}
       >
+        {/* Header Section */}
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold mb-4">
             <span
@@ -87,6 +92,7 @@ const Register = () => {
           </h1>
         </div>
 
+        {/* Name Input Field */}
         <form onSubmit={handleRegister}>
           <div className="mb-4">
             <label
@@ -111,6 +117,7 @@ const Register = () => {
             />
           </div>
 
+          {/* Email Input Field */}
           <div className="mb-4">
             <label
               className={`block font-medium mb-2  ${
@@ -134,6 +141,7 @@ const Register = () => {
             />
           </div>
 
+          {/* Photo URL Input Field */}
           <div className="mb-4">
             <label
               className={`block font-medium mb-2  ${
@@ -157,6 +165,7 @@ const Register = () => {
             />
           </div>
 
+          {/* Password Input Field */}
           <div className="mb-6">
             <label
               className={`block font-medium mb-2  ${
@@ -178,20 +187,24 @@ const Register = () => {
               onChange={handlePasswordChange}
               required
             />
+
+            {/* Display password validation errors */}
             {passwordError && (
               <p className="text-red-500 text-sm mt-1">{passwordError}</p>
             )}
           </div>
 
+          {/* Register Button */}
           <button
             type="submit"
             className="w-full font-bold text-white py-2 px-4 rounded-md bg-red-600 hover:bg-red-700 transition duration-300 cursor-pointer"
-            disabled={!!passwordError}
+            disabled={!!passwordError} 
           >
             Register
           </button>
         </form>
 
+        {/* Login Link */}
         <div className="mt-4 text-center">
           <p
             className={`text-sm mt-1  ${
@@ -217,13 +230,14 @@ const Register = () => {
             </div>
           </div>
 
+          {/* Google Sign-In Button */}
           <div className="mt-6">
             <button
               onClick={handleSignInWithGoogle}
               className="w-full flex items-center justify-center gap-2 font-bold bg-red-600 hover:bg-red-700 text-white rounded-md py-2 px-4 transition duration-300 cursor-pointer"
             >
               <FaGoogle className="text-white" />
-              <span>Sign in with Google</span>
+              <span>Sign in with Google</span> 
             </button>
           </div>
         </div>

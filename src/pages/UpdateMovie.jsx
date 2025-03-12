@@ -8,8 +8,11 @@ import Swal from "sweetalert2";
 import { AppContext } from "../provider/ContextProvider";
 import StarComponent from "../components/StarComponent";
 
+// Generate an array of years for the release year dropdown (current year to 150 years back)
 const currentYear = new Date().getFullYear();
-const years = Array.from({ length: 100 }, (_, i) => currentYear - i);
+const years = Array.from({ length: 150 }, (_, i) => currentYear - i);
+
+// List of predefined genres for the genre selection dropdown
 const genres = [
   "Action",
   "Adventure",
@@ -34,13 +37,14 @@ const genres = [
 ];
 
 const UpdateMovie = () => {
-  const { id } = useParams();
-  const { theme } = useContext(ThemeContext);
+  const { id } = useParams(); 
+  const { theme } = useContext(ThemeContext); 
   const { userRatingValue, setUserRatingValue } = useContext(AppContext);
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
   const [loading, setLoading] = useState(false);
-  const [fetchingMovie, setFetchingMovie] = useState(true);
+  const [fetchingMovie, setFetchingMovie] = useState(true); 
 
+  // Initialize react-hook-form with form state management
   const {
     register,
     handleSubmit,
@@ -49,25 +53,25 @@ const UpdateMovie = () => {
     reset,
   } = useForm();
 
+  // Update the Rating field whenever userRatingValue changes
   useEffect(() => {
     setValue("Rating", userRatingValue);
   }, [userRatingValue, setValue]);
 
+  // Fetch movie data 
   useEffect(() => {
     const fetchMovie = async () => {
       try {
-        setFetchingMovie(true);
+        setFetchingMovie(true); 
         const response = await fetch(
           `https://cinesphere-himadree.vercel.app/movies/${id}`
         );
-
         if (!response.ok) {
-          throw new Error("Failed to fetch movie data");
+          throw new Error("Failed to fetch movie data"); 
         }
-
         const movie = await response.json();
         setUserRatingValue(movie.Rating);
-        // Reset form with movie data
+        // Reset form with fetched movie data
         reset({
           Movie_Poster: movie.Movie_Poster,
           Movie_Title: movie.Movie_Title,
@@ -79,37 +83,35 @@ const UpdateMovie = () => {
         });
       } catch (error) {
         console.error("Error fetching movie:", error);
-        toast.error("Failed to load movie data");
-        navigate(-1);
+        toast.error("Failed to load movie data"); // Show error toast
+        navigate(-1); 
       } finally {
-        setFetchingMovie(false);
+        setFetchingMovie(false); 
       }
     };
-
     fetchMovie();
   }, [id, reset, navigate]);
 
+  // Handle form submission 
   const onSubmit = async (data) => {
- 
-
     try {
-      setLoading(true);
-
+      setLoading(true)
       const response = await fetch(
         `https://cinesphere-himadree.vercel.app/movies/${id}`,
         {
-          method: "PUT",
+          method: "PUT", 
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(data),
+          body: JSON.stringify(data), 
         }
       );
-
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to update movie");
+        throw new Error(errorData.message || "Failed to update movie"); 
       }
+
+      // Show success alert using SweetAlert2
       Swal.fire({
         title: "Movie updated successfully !",
         icon: "success",
@@ -117,9 +119,11 @@ const UpdateMovie = () => {
         color: theme === "dark" ? "#fff" : "#000",
         confirmButtonColor: "#dc2626",
       });
-      navigate(`/all-movies`);
+      navigate(`/all-movies`); 
     } catch (error) {
       console.error("Error updating movie:", error);
+
+      // Show error alert using SweetAlert2
       Swal.fire({
         title: "Error!",
         text: "Failed to update movie",
@@ -129,10 +133,11 @@ const UpdateMovie = () => {
         confirmButtonColor: "#dc2626",
       });
     } finally {
-      setLoading(false);
+      setLoading(false); 
     }
   };
 
+  // Validate  URL
   const validateUrl = (value) => {
     try {
       new URL(value);
@@ -143,12 +148,14 @@ const UpdateMovie = () => {
     }
   };
 
+  // Show loading spinner while fetching movie data
   if (fetchingMovie) {
     return <LoadingSpinner />;
   }
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-3xl">
+      {/* Header Section */}
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold mb-4">
           <span className={`${theme === "dark" ? "text-white" : "text-black"}`}>
@@ -165,6 +172,8 @@ const UpdateMovie = () => {
           information, and make sure others get the best recommendations.
         </p>
       </div>
+
+      {/* Form to update movie details */}
       <form
         onSubmit={handleSubmit(onSubmit)}
         className={`p-6 rounded-lg shadow-md ${
@@ -172,7 +181,7 @@ const UpdateMovie = () => {
         }`}
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Movie Poster */}
+          {/* Movie Poster URL Field */}
           <div className="md:col-span-2">
             <label
               className={`block font-medium mb-2  ${
@@ -204,7 +213,7 @@ const UpdateMovie = () => {
             )}
           </div>
 
-          {/* Movie Title */}
+          {/* Movie Title Field */}
           <div className="md:col-span-2">
             <label
               className={`block font-medium mb-2  ${
@@ -236,7 +245,7 @@ const UpdateMovie = () => {
             )}
           </div>
 
-          {/* Genre */}
+          {/* Genre Field */}
           <div>
             <label
               className={`block font-medium mb-2  ${
@@ -276,7 +285,7 @@ const UpdateMovie = () => {
             )}
           </div>
 
-          {/* Duration */}
+          {/* Duration Field */}
           <div>
             <label
               className={`block font-medium mb-2  ${
@@ -309,7 +318,7 @@ const UpdateMovie = () => {
             )}
           </div>
 
-          {/* Release Year */}
+          {/* Release Year Field */}
           <div>
             <label
               className={`block font-medium mb-2  ${
@@ -342,7 +351,7 @@ const UpdateMovie = () => {
             )}
           </div>
 
-          {/* Rating */}
+          {/* Rating Field */}
           <div className="">
             <label
               className={`block font-medium mb-2  ${
@@ -351,8 +360,7 @@ const UpdateMovie = () => {
             >
               Rating <span className="text-red-500">*</span>
             </label>
-            {/* Rating Component  */}
-
+            {/* StarComponent is used to visually select the rating */}
             <StarComponent />
             <input
               type="hidden"
@@ -368,7 +376,7 @@ const UpdateMovie = () => {
             )}
           </div>
 
-          {/* Summary */}
+          {/* Summary Field */}
           <div className="md:col-span-2">
             <label
               className={`block font-medium mb-2  ${
@@ -401,6 +409,7 @@ const UpdateMovie = () => {
           </div>
         </div>
 
+        {/* Submit Button */}
         <div className="mt-8 flex justify-end">
           <button
             type="submit"

@@ -16,28 +16,30 @@ import LoadingSpinner from "../components/LoadingSpinner";
 import toast from "react-hot-toast";
 
 const MovieDetails = () => {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const { user } = useContext(AuthContext);
-  const { theme } = useContext(ThemeContext);
-  const [movie, setMovie] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [isFavorite, setIsFavorite] = useState(false);
-  const [checkingFavorite, setCheckingFavorite] = useState(true);
-  const [deletedMovieName, setDeletedMovieName] = useState("");
-  const [movieUser, setMovieUser] = useState(true);
+  const { id } = useParams(); 
+  const navigate = useNavigate(); 
+  const { user } = useContext(AuthContext); 
+  const { theme } = useContext(ThemeContext); 
+  const [movie, setMovie] = useState(null); 
+  const [loading, setLoading] = useState(true); 
+  const [isFavorite, setIsFavorite] = useState(false); 
+  const [checkingFavorite, setCheckingFavorite] = useState(true); 
+  const [deletedMovieName, setDeletedMovieName] = useState(""); 
+  const [movieUser, setMovieUser] = useState(true); 
 
+  // Fetch movie details based on the ID
   useEffect(() => {
     const fetchMovieDetails = async () => {
       try {
-        setLoading(true);
+        setLoading(true); 
         const response = await fetch(
           `https://cinesphere-himadree.vercel.app/movies/${id}`
         );
         if (!response.ok) throw new Error("Failed to fetch movie details");
         const data = await response.json();
-        setMovie(data);
-        setDeletedMovieName(data.Movie_Title);
+        setMovie(data); 
+        setDeletedMovieName(data.Movie_Title); 
+        // Check if the logged-in user is the one who added the movie
         if (
           data?.User_Email === user.email
             ? setMovieUser(false)
@@ -45,22 +47,21 @@ const MovieDetails = () => {
         );
       } catch (error) {
         console.error("Error fetching movie details:", error);
-        toast.error("Failed to load movie details");
+        toast.error("Failed to load movie details"); // Show error Toast
       } finally {
-        setLoading(false);
+        setLoading(false); 
       }
     };
-
-    fetchMovieDetails();
+    fetchMovieDetails(); 
   }, [id, user]);
 
+  // Check if the movie is already marked as a favorite by the user
   useEffect(() => {
-    if (!user || !movie) return;
-
+    if (!user || !movie) return; 
     const checkIfFavorite = async () => {
       try {
-        setLoading(true)
-        setCheckingFavorite(true);
+        setLoading(true); 
+        setCheckingFavorite(true); 
         const response = await fetch(
           `https://cinesphere-himadree.vercel.app/favorites/${id}`
         );
@@ -73,14 +74,16 @@ const MovieDetails = () => {
         console.error("Error checking favorite status:", error);
       } finally {
         setCheckingFavorite(false);
-        setLoading(false)
+        setLoading(false); 
       }
     };
+    checkIfFavorite(); 
+  }, [id, user, movie]); 
 
-    checkIfFavorite();
-  }, [id, user, movie]);
-
+  // Handle movie deletion
   const handleDelete = async () => {
+
+    // Show confirmation message using SweetAlert
     const result = await Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -101,8 +104,9 @@ const MovieDetails = () => {
             method: "DELETE",
           }
         );
-
         if (!response.ok) throw new Error("Failed to delete movie");
+
+        // Show success message using SweetAlert
         Swal.fire({
           title: "Deleted!",
           text: `${deletedMovieName} has been deleted`,
@@ -111,11 +115,11 @@ const MovieDetails = () => {
           color: theme === "dark" ? "#fff" : "#000",
           confirmButtonColor: "#dc2626",
         });
-
-        // Redirect after deletion
         navigate("/all-movies");
       } catch (error) {
         console.error("Error deleting movie:", error);
+
+        // Show error message using SweetAlert
         Swal.fire({
           title: "Error!",
           text: "Failed to delete movie !",
@@ -128,11 +132,12 @@ const MovieDetails = () => {
     }
   };
 
+  // Toggle movie favorite status
   const handleFavoriteToggle = async () => {
     try {
-      const method = isFavorite ? "DELETE" : "POST";
+      const method = isFavorite ? "DELETE" : "POST"; 
       const body = isFavorite
-        ? null
+        ? null 
         : JSON.stringify({
             movieId: id,
             Movie_Poster: movie.Movie_Poster,
@@ -143,7 +148,7 @@ const MovieDetails = () => {
             Rating: movie.Rating,
             Summary: movie.Summary,
             User_Email: user.email,
-          });
+          }); 
       const response = await fetch(
         `https://cinesphere-himadree.vercel.app/favorites${
           isFavorite ? `/${id}` : ""
@@ -157,9 +162,10 @@ const MovieDetails = () => {
         }
       );
       if (!response.ok) throw new Error("Failed to update favorites");
-
-      setIsFavorite(!isFavorite);
+      setIsFavorite(!isFavorite); 
       if (isFavorite === false) {
+
+        // Show success message using SweetAlert
         Swal.fire({
           title: "Added to favorites !",
           icon: "success",
@@ -168,6 +174,8 @@ const MovieDetails = () => {
           confirmButtonColor: "#dc2626",
         });
       } else {
+
+        // Show success message using SweetAlert
         Swal.fire({
           title: "Removed from favorites !",
           icon: "success",
@@ -178,6 +186,8 @@ const MovieDetails = () => {
       }
     } catch (error) {
       console.error("Error toggling favorite:", error);
+
+      // Show error message using SweetAlert
       Swal.fire({
         title: "Error!",
         text: "Failed to update favorites",
@@ -189,6 +199,7 @@ const MovieDetails = () => {
     }
   };
 
+  // Alert for restricted actions (update/delete) if the user didn't add the movie
   const userActivityAlert = (activity) => {
     if (activity === "update") {
       Swal.fire({
@@ -211,9 +222,12 @@ const MovieDetails = () => {
     }
   };
 
+  // Show loading spinner while data is being fetched
   if (loading) {
     return <LoadingSpinner></LoadingSpinner>;
   }
+
+  // Show "not found" message if no movie data is available
   if (!movie)
     return (
       <div className="container mx-auto px-4 py-16 text-center">
@@ -231,6 +245,7 @@ const MovieDetails = () => {
     <div className="container mx-auto px-4 py-8">
       <div className=" rounded-lg shadow-lg overflow-hidden">
         <div className="md:flex">
+          {/* Movie Poster */}
           <div className="md:w-1/3 lg:w-1/4">
             <img
               src={movie.Movie_Poster}
@@ -238,8 +253,11 @@ const MovieDetails = () => {
               className="w-full h-auto object-cover"
             />
           </div>
+
+          {/* Movie Details */}
           <div className="md:w-2/3 lg:w-3/4 p-6">
             <div className="flex flex-col lg:flex-row gap-2 justify-between items-start">
+              {/* Display movie title */}
               <h1
                 className={`text-3xl font-bold ${
                   theme === "dark" ? "text-white" : "text-black"
@@ -247,10 +265,13 @@ const MovieDetails = () => {
               >
                 {movie.Movie_Title}
               </h1>
+              {/* Display movie rating */}
               <div className="flex items-center bg-yellow-500 text-black font-bold px-3 py-1 rounded-full">
-                <FaStar className="mr-1" /> {movie.Rating}
+                <FaStar className="mr-1" /> {movie.Rating}{" "}
               </div>
             </div>
+
+            {/* Genres */}
             <div className="flex flex-wrap gap-2 mt-4">
               {movie.Genre.map((g) => (
                 <span
@@ -261,20 +282,26 @@ const MovieDetails = () => {
                 </span>
               ))}
             </div>
+
+            {/* Duration and Release Year */}
             <div
               className={`flex items-center mt-4 ${
                 theme === "dark" ? "text-gray-200" : "text-gray-800"
               }`}
             >
+              {/* Display movie duration */}
               <div className="flex items-center mr-6">
                 <FaClock className="mr-2" />
                 <span>{movie.Duration} min</span>
               </div>
+              {/* Display release year */}
               <div className="flex items-center">
                 <FaCalendarAlt className="mr-2" />
                 <span>{movie.Release_Year}</span>
               </div>
             </div>
+
+            {/* Display movie summary */}
             <div className="mt-6">
               <h3
                 className={`text-xl font-semibold mb-2 ${
@@ -291,10 +318,13 @@ const MovieDetails = () => {
                 {movie.Summary}
               </p>
             </div>
+
+            {/* Action Buttons */}
             <div className="mt-8 flex flex-wrap gap-4">
+              {/* Favorite Button */}
               <Link
-                onClick={handleFavoriteToggle}
-                disabled={checkingFavorite}
+                onClick={handleFavoriteToggle} 
+                disabled={checkingFavorite} 
                 className={`flex items-center px-4 py-2 rounded-lg font-medium transition-all duration-300 cursor-pointer bg-gray-700 text-white hover:bg-gray-800
                 `}
               >
@@ -305,31 +335,35 @@ const MovieDetails = () => {
                 )}
                 {isFavorite ? "Remove from Favorites" : "Add to Favorites"}
               </Link>
+
+              {/* Update Button */}
               {movieUser ? (
                 <Link
-                  onClick={() => userActivityAlert("update")}
+                  onClick={() => userActivityAlert("update")} 
                   className="flex items-center px-4 py-2 rounded-lg font-medium bg-blue-700 text-white hover:bg-blue-800 transition-all duration-300 cursor-pointer"
                 >
                   <FaEdit className="mr-2" /> Update Movie
                 </Link>
               ) : (
                 <Link
-                  onClick={() => navigate(`/update-movie/${id}`)}
+                  onClick={() => navigate(`/update-movie/${id}`)} 
                   className="flex items-center px-4 py-2 rounded-lg font-medium bg-blue-700 text-white hover:bg-blue-800 transition-all duration-300 cursor-pointer"
                 >
                   <FaEdit className="mr-2" /> Update Movie
                 </Link>
               )}
+
+              {/* Delete Button */}
               {movieUser ? (
                 <Link
-                  onClick={() => userActivityAlert("delete")}
+                  onClick={() => userActivityAlert("delete")} 
                   className="flex items-center px-4 py-2 rounded-lg font-medium bg-red-700 text-white hover:bg-red-800 transition-all duration-300 cursor-pointer"
                 >
                   <FaTrash className="mr-2" /> Delete Movie
                 </Link>
               ) : (
                 <Link
-                  onClick={handleDelete}
+                  onClick={handleDelete} 
                   className="flex items-center px-4 py-2 rounded-lg font-medium bg-red-700 text-white hover:bg-red-800 transition-all duration-300 cursor-pointer"
                 >
                   <FaTrash className="mr-2" /> Delete Movie

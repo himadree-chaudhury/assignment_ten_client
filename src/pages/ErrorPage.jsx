@@ -6,7 +6,7 @@ const ErrorPage = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen ">
-      {/* Elephant SVG */}
+      {/* CineCamera SVG */}
       <svg
         version="1.1"
         id="_x32_"
@@ -43,7 +43,7 @@ const ErrorPage = () => {
         <p className="my-4 pb-4 text-lg text-gray-600">
           Oops! The page you are looking for does not exist.
         </p>
-        {/* Navigate To Home Button */}
+        {/* Navigate To Back Button */}
         <Link
           onClick={() => navigate(-1)}
           className="border border-red-400 text-black font-bold px-8 py-3 rounded-3xl hover:bg-red-600 hover:text-white hover:border-red-600 cursor-pointer duration-300 transition-all"

@@ -16,15 +16,16 @@ import LoadingSpinner from "../components/LoadingSpinner";
 import toast from "react-hot-toast";
 
 const BlogDetails = () => {
-  const [blog, setBlog] = useState(null);
+  const [blog, setBlog] = useState(null); 
   const [loading, setLoading] = useState(true);
-  const { id } = useParams();
-  const { theme } = useContext(ThemeContext);
+  const { id } = useParams(); 
+  const { theme } = useContext(ThemeContext); 
 
+  // Fetch blog details based on the ID
   useEffect(() => {
     const fetchBlogDetails = async () => {
       try {
-        setLoading(true);
+        setLoading(true); 
         const response = await fetch(
           `https://cinesphere-himadree.vercel.app/blogs/${id}`
         );
@@ -32,23 +33,23 @@ const BlogDetails = () => {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const data = await response.json();
-        setBlog(data);
+        setBlog(data); 
       } catch (error) {
         console.error("Error fetching blog details:", error);
-        toast.error("Failed to load details");
+        toast.error("Failed to load details"); // Toast notification
       } finally {
         setLoading(false);
       }
     };
+    fetchBlogDetails(); 
+  }, [id]); 
 
-    fetchBlogDetails();
-  }, [id]);
-
-
+  // Show loading spinner while data is being fetched
   if (loading) {
-    return <LoadingSpinner></LoadingSpinner>;
+    return <LoadingSpinner />;
   }
 
+  // Show "not found" message if no blog data is available
   if (!blog) {
     return (
       <div className="container mx-auto px-4 py-16 text-center">
@@ -69,29 +70,33 @@ const BlogDetails = () => {
         theme === "dark" ? "text-white" : "text-black"
       }`}
     >
-      {/* Blog Header */}
+      {/* Blog Header Section */}
       <div className="mb-8">
+        {/* Blog category */}
         <span className="bg-red-600 text-white text-sm font-medium px-3 py-1 rounded-full mb-4 inline-block">
           {blog.category}
         </span>
-        <h1 className="text-4xl font-bold mb-4">{blog.title}</h1>
-
+        <h1 className="text-4xl font-bold mb-4">{blog.title}</h1>{" "}
+        {/* Blog title */}
         <div className="flex flex-wrap items-center gap-4 text-sm mb-6">
+          {/* Author name */}
           <span className="flex items-center">
             <FaUser className="mr-2" /> {blog.author}
           </span>
+          {/* Publish date */}
           <span className="flex items-center">
             <FaCalendarAlt className="mr-2" /> {blog.date}
           </span>
           {blog.readTime && (
             <span className="flex items-center">
-              <FaClock className="mr-2" /> {blog.readTime} min read
+              <FaClock className="mr-2" /> {blog.readTime} min read{" "}
+              {/* Read time */}
             </span>
           )}
         </div>
       </div>
 
-      {/* Featured Image */}
+      {/* Featured Image Section */}
       <div className="mb-8">
         <img
           src={blog.image}
@@ -100,19 +105,20 @@ const BlogDetails = () => {
         />
       </div>
 
-      {/* Blog Content */}
+      {/* Blog Content Section */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Main Content Area */}
         <div className="lg:col-span-2">
-          {/* Content */}
+          {/* Blog Content */}
           <div
             className={`prose max-w-none ${
-              theme === "dark" ? "prose-invert" : ""
+              theme === "dark" ? "prose-invert" : "" // Adjust prose styling for dark mode
             }`}
           >
             {blog.content}
           </div>
 
-          {/* Tags */}
+          {/* Tags Section */}
           {blog.tags && blog.tags.length > 0 && (
             <div className="mt-8">
               <h3 className="text-lg font-bold mb-2">Tags</h3>
@@ -129,7 +135,7 @@ const BlogDetails = () => {
             </div>
           )}
 
-          {/* Share */}
+          {/* Share Section */}
           <div className="mt-8">
             <h3 className="text-lg font-bold mb-2">Share This Post</h3>
             <div className="flex gap-3">
@@ -151,7 +157,7 @@ const BlogDetails = () => {
             </div>
           </div>
 
-          {/* Author Bio */}
+          {/* Author Bio Section */}
           {blog.authorBio && (
             <div
               className={`mt-12 p-6 rounded-xl ${
@@ -182,9 +188,9 @@ const BlogDetails = () => {
           )}
         </div>
 
-        {/* Sidebar */}
+        {/* Sidebar Section */}
         <div className="lg:col-span-1">
-          {/* Newsletter Subscription */}
+          {/* Newsletter Subscription Form */}
           <div
             className={`p-6 rounded-xl ${
               theme === "dark" ? "bg-gray-800" : "bg-gray-100"
@@ -222,7 +228,7 @@ const BlogDetails = () => {
       <div className="mt-12">
         <h3 className="text-2xl font-bold mb-6">Comments</h3>
 
-        {/* Comment form */}
+        {/* Comment Form */}
         <div
           className={`p-6 rounded-xl mb-8 ${
             theme === "dark" ? "bg-gray-800" : "bg-gray-100"
@@ -269,7 +275,7 @@ const BlogDetails = () => {
           </form>
         </div>
 
-        {/* Display comments if they exist */}
+        {/* Display Comments */}
         {blog.comments && blog.comments.length > 0 ? (
           <div className="space-y-6">
             {blog.comments.map((comment, index) => (
@@ -293,7 +299,9 @@ const BlogDetails = () => {
                   )}
                   <div>
                     <div className="flex items-center gap-2 mb-1">
+                      {/* Commenter name */}
                       <h4 className="font-semibold">{comment.name}</h4>
+                      {/* Comment date */}
                       <span
                         className={`text-xs ${
                           theme === "dark" ? "text-gray-400" : "text-gray-500"
@@ -302,6 +310,7 @@ const BlogDetails = () => {
                         {comment.date}
                       </span>
                     </div>
+                    {/* Comment text */}
                     <p
                       className={
                         theme === "dark" ? "text-gray-300" : "text-gray-600"

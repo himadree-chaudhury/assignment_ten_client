@@ -13,6 +13,7 @@ const AllMovies = () => {
   const [selectedGenre, setSelectedGenre] = useState("");
   const { theme } = useContext(ThemeContext);
 
+  // List of predefined genres for filtering movies
   const genres = [
     "All",
     "Action",
@@ -26,15 +27,17 @@ const AllMovies = () => {
     "Animation",
   ];
 
+  // Get genre parameter from the URL
   useEffect(() => {
     const genreParam = searchParams.get("genre");
     if (genreParam) {
       setSelectedGenre(genreParam);
     }
 
+    // Fetch movies
     const fetchMovies = async () => {
       try {
-        setLoading(true);
+        setLoading(true); // Start loading state
         const response = await fetch(
           `https://cinesphere-himadree.vercel.app/movies`
         );
@@ -49,14 +52,15 @@ const AllMovies = () => {
         setLoading(false);
       }
     };
-
     fetchMovies();
   }, [searchParams]);
 
+  // Handle changes in the search input field
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
   };
 
+  // Handle genre selection and update URL query parameters
   const handleGenreSelect = (genre) => {
     if (genre === "All") {
       setSelectedGenre("");
@@ -67,10 +71,11 @@ const AllMovies = () => {
     }
   };
 
+  // Filter movies based on search term and selected genre
   const filteredMovies = movies.filter((movie) => {
     const matchesSearch = movie.Movie_Title.toLowerCase().includes(
       searchTerm.toLowerCase()
-    );
+    ); // Check if movie title matches the search term
     const matchesGenre = selectedGenre
       ? movie.Genre.includes(selectedGenre)
       : true;
@@ -79,6 +84,7 @@ const AllMovies = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
+      {/* Header Section */}
       <h1
         className={`text-4xl font-bold mb-8 text-center ${
           theme === "dark" ? "text-white" : "text-black"
@@ -89,27 +95,31 @@ const AllMovies = () => {
           Movies
         </span>
       </h1>
+
+      {/* Search and Genre Filter Section */}
       <div className="mb-8">
         <div className="flex flex-col md:flex-row justify-between gap-4 mb-6">
+          {/* Search Input */}
           <div className="relative flex items-center">
-            <FaSearch className="absolute left-3 text-gray-400" />
+            <FaSearch className="absolute left-3 text-gray-400" />{" "}
+            {/* Search icon */}
             <input
               type="text"
               placeholder="Search movies..."
-              //   value={searchTerm}
-              onChange={handleSearch}
+              onChange={handleSearch} 
               className="w-full md:w-80 px-4 py-2 pl-10 rounded-lg border focus:outline-none focus:ring-2 focus:ring-red-700 bg-gray-700 border-gray-600 text-white"
             />
           </div>
 
+          {/* Genre Buttons */}
           <div className="flex flex-wrap gap-2">
             {genres.map((genre) => (
               <button
                 key={genre}
-                onClick={() => handleGenreSelect(genre)}
+                onClick={() => handleGenreSelect(genre)} 
                 className={`px-4 py-2 rounded-full text-sm cursor-pointer ${
                   (genre === "All" && !selectedGenre) || selectedGenre === genre
-                    ? "bg-red-600 text-white"
+                    ? "bg-red-600 text-white" 
                     : "bg-gray-700 text-white hover:bg-gray-800"
                 }`}
               >
@@ -120,12 +130,13 @@ const AllMovies = () => {
         </div>
       </div>
 
+      {/* Display Movies or Loading Spinner */}
       {loading ? (
-        <LoadingSpinner />
+        <LoadingSpinner /> 
       ) : filteredMovies.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
           {filteredMovies.map((movie) => (
-            <MovieCard key={movie._id} movie={movie} />
+            <MovieCard key={movie._id} movie={movie} /> 
           ))}
         </div>
       ) : (

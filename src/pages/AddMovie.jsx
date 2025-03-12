@@ -7,8 +7,11 @@ import StarComponent from "../components/StarComponent";
 import Swal from "sweetalert2";
 import { AppContext } from "../provider/ContextProvider";
 
+// Generate years dynamically starting from the current year to 150 years back
 const currentYear = new Date().getFullYear();
 const years = Array.from({ length: 150 }, (_, i) => currentYear - i);
+
+// List of predefined genres for movie categorization
 const genres = [
   "Action",
   "Adventure",
@@ -33,12 +36,13 @@ const genres = [
 ];
 
 const AddMovie = () => {
-  const { user } = useContext(AuthContext);
-  const { theme } = useContext(ThemeContext);
-  const { userRatingValue } = useContext(AppContext);
-  const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+  const { user } = useContext(AuthContext); 
+  const { theme } = useContext(ThemeContext); 
+  const { userRatingValue } = useContext(AppContext); 
+  const navigate = useNavigate(); 
+  const [loading, setLoading] = useState(false); 
 
+  // Initialize react-hook-form with default values for the form fields
   const {
     register,
     handleSubmit,
@@ -55,20 +59,22 @@ const AddMovie = () => {
       Summary: "",
     },
   });
-  // Update the form field when userRatingValue changes
+
+  // Update the form's Rating field whenever userRatingValue changes
   useEffect(() => {
     setValue("Rating", userRatingValue);
   }, [userRatingValue, setValue]);
 
+  // Handle form submission 
   const onSubmit = async (data) => {
     try {
-      setLoading(true);
-
+      setLoading(true); 
       const movieData = {
         ...data,
-        User_Email: user.email,
+        User_Email: user.email, 
       };
 
+      // Send POST request to add the movie
       const response = await fetch(
         `https://cinesphere-himadree.vercel.app/movies`,
         {
@@ -79,11 +85,11 @@ const AddMovie = () => {
           body: JSON.stringify(movieData),
         }
       );
-
       if (!response.ok) {
         throw new Error("Failed to add movie");
       }
 
+      // Show success message using SweetAlert
       Swal.fire({
         title: "Movie added successfully !",
         icon: "success",
@@ -94,6 +100,8 @@ const AddMovie = () => {
       navigate("/all-movies");
     } catch (error) {
       console.error("Error adding movie:", error);
+
+      // Show error message using SweetAlert
       Swal.fire({
         title: "Error!",
         text: "Failed to add movie",
@@ -107,6 +115,7 @@ const AddMovie = () => {
     }
   };
 
+  // Validate if the input is a valid URL
   const validateUrl = (value) => {
     try {
       new URL(value);
@@ -119,6 +128,7 @@ const AddMovie = () => {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-3xl">
+      {/* Header Section */}
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold mb-4">
           <span className={`${theme === "dark" ? "text-white" : "text-black"}`}>
@@ -136,6 +146,8 @@ const AddMovie = () => {
           others to discover them.
         </p>
       </div>
+
+      {/* Form Section */}
       <form
         onSubmit={handleSubmit(onSubmit)}
         className={`p-6 rounded-lg shadow-md ${
@@ -143,7 +155,7 @@ const AddMovie = () => {
         }`}
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Movie Poster */}
+          {/* Movie Poster Field */}
           <div className="md:col-span-2">
             <label
               className={`block font-medium mb-2  ${
@@ -175,7 +187,7 @@ const AddMovie = () => {
             )}
           </div>
 
-          {/* Movie Title */}
+          {/* Movie Title Field */}
           <div className="md:col-span-2">
             <label
               className={`block font-medium mb-2  ${
@@ -207,7 +219,7 @@ const AddMovie = () => {
             )}
           </div>
 
-          {/* Duration */}
+          {/* Duration Field */}
           <div>
             <label
               className={`block font-medium mb-2  ${
@@ -240,7 +252,7 @@ const AddMovie = () => {
             )}
           </div>
 
-          {/* Release Year */}
+          {/* Release Year Field */}
           <div>
             <label
               className={`block font-medium mb-2  ${
@@ -273,7 +285,7 @@ const AddMovie = () => {
             )}
           </div>
 
-          {/* Genre */}
+          {/* Genre Field */}
           <div>
             <label
               className={`block font-medium mb-2  ${
@@ -312,7 +324,8 @@ const AddMovie = () => {
               </span>
             )}
           </div>
-          {/* Rating */}
+
+          {/* Rating Field */}
           <div className="">
             <label
               className={`block font-medium mb-2  ${
@@ -321,8 +334,7 @@ const AddMovie = () => {
             >
               Rating <span className="text-red-500">*</span>
             </label>
-            {/* Rating Component  */}
-
+            {/* StarComponent is used to visually select the rating */}
             <StarComponent />
             <input
               type="hidden"
@@ -338,7 +350,7 @@ const AddMovie = () => {
             )}
           </div>
 
-          {/* Summary */}
+          {/* Summary Field */}
           <div className="md:col-span-2">
             <label
               className={`block font-medium mb-2  ${
@@ -371,6 +383,7 @@ const AddMovie = () => {
           </div>
         </div>
 
+        {/* Submit Button */}
         <div className="mt-8 flex justify-end">
           <button
             type="submit"

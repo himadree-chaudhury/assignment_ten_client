@@ -7,25 +7,29 @@ import { AuthContext } from "../provider/AuthProvider";
 import toast from "react-hot-toast";
 
 const Navbar = () => {
-  const { user, logOut } = useContext(AuthContext);
-  const { theme, toggleTheme } = useContext(ThemeContext);
+  const { user, logOut } = useContext(AuthContext); 
+  const { theme, toggleTheme } = useContext(ThemeContext); 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  // Close mobile menu on route change
 
+  // Function to toggle mobile menu open/close
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
+  // Handle logout functionality 
   const handleLogout = () => {
     logOut()
       .then(() => {
-        setIsMenuOpen(false)
-      toast.success("Logout successful!");
+        setIsMenuOpen(false); 
+        toast.success("Logout successful!");
       })
       .catch((error) => {
         console.error(error);
-      toast.error("Something went wrong. Try again");
+        toast.error("Something went wrong. Try again"); 
       });
   };
+
+  // Dynamically style navigation links based on active state
   const navLinkStyles = ({ isActive }) => {
     return {
       fontWeight: isActive ? "bold" : "normal",
@@ -43,7 +47,7 @@ const Navbar = () => {
       >
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center py-4">
-            {/* Logo */}
+            {/* Logo Section */}
             <Link to="/" className="flex items-center space-x-2">
               <img src={logo} alt="CineSphere Logo" className="h-10 w-auto" />
               <span className="text-2xl font-bold">
@@ -54,7 +58,7 @@ const Navbar = () => {
               </span>
             </Link>
 
-            {/* Desktop Menu */}
+            {/* Desktop Navigation Menu (Hidden on small screens) */}
             <div className="hidden lg:flex items-center space-x-6">
               <NavLink to="/" style={navLinkStyles} className="py-2">
                 Home
@@ -77,8 +81,9 @@ const Navbar = () => {
               </NavLink>
             </div>
 
-            {/* User Authentication and Theme Toggle */}
+            {/* User Authentication and Theme Toggle (Desktop View) */}
             <div className="hidden lg:flex items-center space-x-4">
+              {/* Theme Toggle Button */}
               <button
                 onClick={toggleTheme}
                 className={`p-2 rounded-full cursor-pointer ${
@@ -94,8 +99,10 @@ const Navbar = () => {
                 )}
               </button>
 
+              {/* User Profile and Logout (if logged in) */}
               {user ? (
                 <div className="flex items-center space-x-4">
+                  {/* User Profile Dropdown */}
                   <div className="relative group">
                     <img
                       src={
@@ -115,6 +122,7 @@ const Navbar = () => {
                       </p>
                     </div>
                   </div>
+                  {/* Logout Button */}
                   <button
                     onClick={handleLogout}
                     className={`px-4 py-2 rounded-md ${
@@ -127,6 +135,7 @@ const Navbar = () => {
                   </button>
                 </div>
               ) : (
+                // Login and Register Buttons (if not logged in)
                 <div className="flex items-center space-x-2">
                   <Link
                     to="/login"
@@ -144,8 +153,9 @@ const Navbar = () => {
               )}
             </div>
 
-            {/* Mobile Menu Button */}
+            {/* Mobile Menu Button (Visible on small screens) */}
             <div className="lg:hidden flex items-center">
+              {/* Theme Toggle Button for Mobile */}
               <button
                 onClick={toggleTheme}
                 className={`p-2 mr-2 rounded-full cursor-pointer ${
@@ -158,6 +168,7 @@ const Navbar = () => {
                   <FaMoon className="text-gray-700" />
                 )}
               </button>
+              {/* Mobile Menu Toggle Button */}
               <button
                 onClick={toggleMenu}
                 className={`p-2 rounded-md cursor-pointer ${
@@ -171,7 +182,7 @@ const Navbar = () => {
             </div>
           </div>
 
-          {/* Mobile Menu */}
+          {/* Mobile Navigation Menu */}
           <div
             className={`lg:hidden ${isMenuOpen ? "block" : "hidden"} ${
               theme === "dark" ? "bg-gray-800" : "bg-gray-100"
@@ -181,7 +192,7 @@ const Navbar = () => {
               <NavLink
                 to="/"
                 className="py-2 px-3 rounded hover:bg-opacity-10 hover:bg-black hover:text-white"
-                onClick={() => setIsMenuOpen(false)}
+                onClick={() => setIsMenuOpen(false)} // Close menu on link click
               >
                 Home
               </NavLink>
@@ -213,9 +224,9 @@ const Navbar = () => {
               >
                 Spotlight
               </NavLink>
-
               {user ? (
                 <div className="flex flex-col space-y-3 border-t pt-3 mt-3">
+                  {/* User Profile in Mobile Menu */}
                   <div className="flex items-center space-x-3">
                     <img
                       src={
@@ -227,6 +238,7 @@ const Navbar = () => {
                     />
                     <span>{user.displayName || "User"}</span>
                   </div>
+                  {/* Logout Button in Mobile Menu */}
                   <button
                     onClick={handleLogout}
                     className={`py-2 px-3 rounded-md ${
@@ -239,6 +251,7 @@ const Navbar = () => {
                   </button>
                 </div>
               ) : (
+                // Login and Register Buttons in Mobile Menu
                 <div className="flex flex-col text-center space-y-3 border-t pt-3 mt-3">
                   <Link
                     to="/login"

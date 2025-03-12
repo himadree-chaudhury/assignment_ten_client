@@ -2,7 +2,7 @@
 
 ## 🍿 Project Overview
 
-A user-friendly movie management platform that allows users to explore, add, delete, and favorite movies while ensuring a smooth and interactive experience.
+CineSphere is a user-friendly movie management platform that allows users to explore, add, delete, and favorite movies while ensuring a smooth and interactive experience. With a sleek design and powerful features, CineSphere brings your love for movies to life! 
 
 ## 🔗 Live Site 
 
@@ -23,12 +23,12 @@ A user-friendly movie management platform that allows users to explore, add, del
 
 ## 🛠 Tech Stack
 
-- **React** - Modular UI development with a component-based architecture for scalability.
-- **React Router DOM** - Enables seamless navigation and dynamic rendering without page reloads.
-- **Tailwind CSS** - Utility-first CSS for rapid styling and consistent design across devices.
-- **Firebase** - Authentication & hosting; backend-as-a-service for faster development.
-- **React Hook Form** - Simplifies form handling with minimal re-renders and built-in validation.
-- **React Hot Toast** - Displays non-intrusive notifications for better user feedback.
-- **SweetAlert2** - Modern alert dialogs for interactive and visually appealing messages.
-- **Swiper** - Responsive sliders/carousels with touch gestures and animations.
-- **React Icons** - Scalable icons from popular packs as reusable React components.
+- **React** - Component-based UI for scalability.
+- **React Router DOM** - Seamless navigation, no reload.
+- **Tailwind CSS** - Utility-first styling framework.
+- **Firebase** - Authentication and hosting service.
+- **React Hook Form** - Efficient form handling and validation.
+- **React Hot Toast** - Non-intrusive user notifications.
+- **SweetAlert2** - Modern, interactive alert dialogs.
+- **Swiper** - Touch-enabled responsive carousels.
+- **React Icons** - Scalable, reusable icon components.
