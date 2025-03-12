@@ -23,29 +23,12 @@ A user-friendly movie management platform that allows users to explore, add, del
 
 ## 🛠 Tech Stack
 
-- **React (v^19.0.0)**  
-  - Modular UI development with a component-based architecture for scalability.
-
-- **React Router DOM (v^6.30.0)**  
-  - Enables seamless navigation and dynamic rendering without page reloads.
-
-- **Tailwind CSS (v^4.0.9)**  
-  - Utility-first CSS for rapid styling and consistent design across devices.
-
-- **Firebase (v^11.4.0)**  
-  - Authentication & hosting; backend-as-a-service for faster development.
-
-- **React Hook Form (v^7.54.2)**  
-  - Simplifies form handling with minimal re-renders and built-in validation.
-
-- **React Hot Toast (v^2.5.2)**  
-  - Displays non-intrusive notifications for better user feedback.
-
-- **SweetAlert2 (v^11.17.2)**  
-  - Modern alert dialogs for interactive and visually appealing messages.
-
-- **Swiper (v^11.2.5)**  
-  - Responsive sliders/carousels with touch gestures and animations.
-
-- **React Icons (v^5.5.0)**  
-  - Scalable icons from popular packs as reusable React components.
+- **React** - Modular UI development with a component-based architecture for scalability.
+- **React Router DOM** - Enables seamless navigation and dynamic rendering without page reloads.
+- **Tailwind CSS** - Utility-first CSS for rapid styling and consistent design across devices.
+- **Firebase** - Authentication & hosting; backend-as-a-service for faster development.
+- **React Hook Form** - Simplifies form handling with minimal re-renders and built-in validation.
+- **React Hot Toast** - Displays non-intrusive notifications for better user feedback.
+- **SweetAlert2** - Modern alert dialogs for interactive and visually appealing messages.
+- **Swiper** - Responsive sliders/carousels with touch gestures and animations.
+- **React Icons** - Scalable icons from popular packs as reusable React components.
