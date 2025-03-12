@@ -214,7 +214,7 @@ const MovieDetails = () => {
       Swal.fire({
         title: "Sorry!",
         text: "This movie was added by someone else. You cannot delete it",
-        icon: "error",
+        icon: "info",
         background: theme === "dark" ? "#1a202c" : "#fff",
         color: theme === "dark" ? "#fff" : "#000",
         confirmButtonColor: "#dc2626",
