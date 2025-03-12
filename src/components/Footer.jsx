@@ -151,7 +151,7 @@ const Footer = () => {
         {/* Footer Bottom Section */}
         <div className="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400">
           {/* Dynamic copyright notice with the current year */}
-          &copy; {currentYear} Movie Portal. All rights reserved.
+          &copy; {currentYear} CineSphere. All rights reserved.
         </div>
       </div>
     </footer>
