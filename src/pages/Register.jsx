@@ -49,7 +49,6 @@ const Register = () => {
     try {
       await createUser(email, password); 
       await updateUserProfile(name, photoURL); 
-
       toast.success("Registration successful!"); // Show success toast
       navigate("/"); 
     } catch (error) {
