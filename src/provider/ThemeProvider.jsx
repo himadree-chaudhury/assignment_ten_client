@@ -1,20 +1,17 @@
 import React, { createContext, useState, useEffect } from "react";
 
 // Create the Theme Context
-// !Do Not Uncomment The Below Line
-// eslint-disable-next-line react-refresh/only-export-components
-export const ThemeContext = createContext();
+const ThemeContext = createContext();
+export { ThemeContext };
 
 const ThemeProvider = ({ children }) => {
   // Check if there's a saved theme preference in localStorage
   // If not, use system preference or default to 'light'
   const getInitialTheme = () => {
     const savedTheme = localStorage.getItem("theme");
-
     if (savedTheme) {
       return savedTheme;
     }
-
     // Check for system preference
     if (
       window.matchMedia &&
@@ -22,7 +19,6 @@ const ThemeProvider = ({ children }) => {
     ) {
       return "dark";
     }
-
     // Default to light theme
     return "light";
   };
@@ -51,15 +47,8 @@ const ThemeProvider = ({ children }) => {
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
   };
 
-  // Provide a way to explicitly set the theme
-  const setThemeMode = (mode) => {
-    if (mode === "dark" || mode === "light") {
-      setTheme(mode);
-    }
-  };
-
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme, setThemeMode }}>
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
       {children}
     </ThemeContext.Provider>
   );

@@ -13,7 +13,14 @@ createRoot(document.getElementById("root")).render(
     <ThemeProvider>
       <AuthProvider>
         <ContextProvider>
-          <RouterProvider router={route}></RouterProvider>
+          <RouterProvider
+            router={route}
+            // !If these features are turned off, an error occurs
+            future={{
+              v7_startTransition: true,
+              v7_relativeSplatPath: true,
+            }}
+          ></RouterProvider>
           <Toaster></Toaster>
         </ContextProvider>
       </AuthProvider>

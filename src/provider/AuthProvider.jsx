@@ -12,9 +12,8 @@ import {
 import app from "../firebase/firebase.config";
 
 // Create Authentication Context
-// !Do Not Uncomment The Below Line
-// eslint-disable-next-line react-refresh/only-export-components
-export const AuthContext = createContext();
+const AuthContext = createContext();
+export {AuthContext};
 
 // Initialize Firebase Authentication
 const auth = getAuth(app);

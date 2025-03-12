@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
-import { Rating } from "react-simple-star-rating";
 import { toast } from "react-hot-toast";
 import LoadingSpinner from "../components/LoadingSpinner";
 import { ThemeContext } from "../provider/ThemeProvider";
@@ -91,16 +90,7 @@ const UpdateMovie = () => {
   }, [id, reset, navigate]);
 
   const onSubmit = async (data) => {
-    // if (data.rating === 0) {
-    //   Swal.fire({
-    //     text: "Please select a rating !",
-    //     icon: "info",
-    //     background: theme === "dark" ? "#1a202c" : "#fff",
-    //     color: theme === "dark" ? "#fff" : "#000",
-    //     confirmButtonColor: "#dc2626",
-    //   });
-    //   return;
-    // }
+ 
 
     try {
       setLoading(true);

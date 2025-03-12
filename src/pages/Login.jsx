@@ -24,8 +24,11 @@ const Login = () => {
       toast.success("Login successful!");
       navigate(from, { replace: true });
     } catch (error) {
-      console.log(error);
-      toast.error("Invalid email or password");
+      if (error.code === "auth/invalid-credential") {
+        toast.error("Incorrect email or password. Try Again");
+      } else {
+        toast.error("Failed to log in. Please try again.");
+      }
     }
   };
 
